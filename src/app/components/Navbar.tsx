@@ -1,0 +1,66 @@
+"use client";
+
+import { Dropdown, Navbar } from "flowbite-react";
+import { Avatar } from "flowbite-react";
+import Image from "next/image";
+import logo from "@/images/logo.png";
+
+const NavbarMenu = () => {
+  const register = false;
+  return (
+    <Navbar fluid rounded className="border-b border-gray-300">
+      <Navbar.Brand href="/">
+        <Image src={logo} width={70} height={70} alt="logo" priority />
+        <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white">
+          Job Hunt
+        </span>
+      </Navbar.Brand>
+      <div className="flex md:order-2">
+        {register ? (
+          <Dropdown
+            inline
+            label={
+              <Avatar
+                alt="User settings"
+                img="https://flowbite.com/docs/images/people/profile-picture-5.jpg"
+                rounded
+              />
+            }
+          >
+            <Dropdown.Header>
+              <span className="block text-sm">Bonnie Green</span>
+              <span className="block truncate text-sm font-medium">
+                name@flowbite.com
+              </span>
+            </Dropdown.Header>
+            <Dropdown.Item>Dashboard</Dropdown.Item>
+            <Dropdown.Item>Settings</Dropdown.Item>
+            <Dropdown.Item>Earnings</Dropdown.Item>
+            <Dropdown.Divider />
+            <Dropdown.Item>Sign out</Dropdown.Item>
+          </Dropdown>
+        ) : (
+          <div className="button-container mr-8">
+            <button className="bg-[#438dfc] py-2 px-8 rounded-md text-white border border-solid border-gray-300 hover:text-[#438dfc] hover:bg-white duration-200 font-medium">
+              Login
+            </button>
+          </div>
+        )}
+        <Navbar.Toggle />
+      </div>
+      <Navbar.Collapse>
+        <Navbar.Link
+          href="#"
+          className="text-xl active-nav hover:text-blue-500 nav-links duration-200"
+        >
+          Home
+        </Navbar.Link>
+        <Navbar.Link href="#" className="text-xl nav-links duration-200">
+          Find Job
+        </Navbar.Link>
+      </Navbar.Collapse>
+    </Navbar>
+  );
+};
+
+export default NavbarMenu;
