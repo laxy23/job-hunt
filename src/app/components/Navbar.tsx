@@ -3,14 +3,14 @@
 import { Dropdown, Navbar } from "flowbite-react";
 import { Avatar } from "flowbite-react";
 import Image from "next/image";
-import logo from "@/images/logo.png";
+import logo from "@/images/logo2.png";
 
 const NavbarMenu = () => {
   const register = false;
   return (
     <Navbar fluid rounded className="border-b border-gray-300">
       <Navbar.Brand href="/">
-        <Image src={logo} width={70} height={70} alt="logo" priority />
+        <Image src={logo} width={100} height={100} alt="logo" priority />
         <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white">
           Job Hunt
         </span>
