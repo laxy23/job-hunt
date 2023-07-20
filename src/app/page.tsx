@@ -1,13 +1,15 @@
 import Categories from "./components/Categories";
+import Discover from "./components/Discover";
+import Footer from "./components/Footer";
 import Header from "./components/Header";
-import NavbarMenu from "./components/Navbar";
 
 export default function Home() {
   return (
     <>
-      <NavbarMenu />
       <Header />
       <Categories />
+      <Discover />
+      <Footer />
     </>
   );
 }

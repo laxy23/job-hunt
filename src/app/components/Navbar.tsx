@@ -50,12 +50,12 @@ const NavbarMenu = () => {
       </div>
       <Navbar.Collapse>
         <Navbar.Link
-          href="#"
+          href="/"
           className="text-xl active-nav hover:text-blue-500 nav-links duration-200"
         >
           Home
         </Navbar.Link>
-        <Navbar.Link href="#" className="text-xl nav-links duration-200">
+        <Navbar.Link href="/jobs" className="text-xl nav-links duration-200">
           Find Job
         </Navbar.Link>
       </Navbar.Collapse>

@@ -9,7 +9,7 @@ import Image from "next/image";
 
 const Header = () => {
   return (
-    <section id="header" className="container mx-auto px-6 mt-8 lg:mt-1">
+    <section id="mb" className="container mx-auto px-6 mt-8 lg:mt-1">
       <div className="grid grid-cols-1 lg:grid-cols-2">
         <div className="flex justify-center flex-col">
           <div className="uppercase text-[#438dfc] flex items-center mb-8">
