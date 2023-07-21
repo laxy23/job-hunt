@@ -99,3 +99,132 @@ export const discover = [
     type: "full time",
   },
 ];
+
+export const experience = [
+  {
+    id: 1,
+    content: "Interntship",
+  },
+  {
+    id: 2,
+    content: "Entry Level",
+  },
+  {
+    id: 3,
+    content: "Mid-Senior Level",
+  },
+  {
+    id: 4,
+    content: "Executive",
+  },
+];
+
+export const jobs = [
+  {
+    id: 1,
+    jobTitle: "Figma Design Expert",
+    companyName: "Loom",
+    logo: "https://preview.colorlib.com/theme/jobsco/assets/img/icon/1.svg",
+    desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla tempore eaque unde praesentium veniam placeat quaerat nisi dolore ut! Omnis eveniet dignissimos saepe cumque placeat.",
+    location: "Zenica, BiH",
+    salary: "2,500 BAM - 3,500 BAM",
+    type: "Remote",
+    experience: [
+      'Figma - and using it "the right way", "Designing with modern systems and design languages',
+      "Developing modern web and app development, including progressive and responsive designs",
+      "Develop final designs from conceptual mockups and wireframes",
+    ],
+    skills: [
+      "User Interface Design",
+      "Figma",
+      "Wireframing",
+      "User Experience",
+      "Styleguide",
+      "Proptotyping",
+      "Website",
+      "Landing Page",
+    ],
+  },
+  {
+    id: 2,
+    jobTitle: "Web Developer",
+    companyName: "Hubspot",
+    logo: "https://preview.colorlib.com/theme/jobsco/assets/img/icon/2.svg",
+    desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas laborum magnam explicabo recusandae, cum aliquid ullam.",
+    location: "Remote",
+    salary: "4,000 BAM - 5,000 BAM",
+    type: "Full Time",
+    experience: [
+      "Building and maintaining responsive websites",
+      "Proficiency in HTML, CSS, and JavaScript",
+      "Experience with frontend frameworks (e.g., React, Vue)",
+      "Understanding of backend technologies (e.g., Node.js, Express)",
+      "Version control with Git",
+      "Testing and debugging web applications",
+    ],
+    skills: [
+      "HTML",
+      "CSS",
+      "JavaScript",
+      "React",
+      "Vue",
+      "Node.js",
+      "Express",
+      "Git",
+      "Web Development",
+    ],
+  },
+  {
+    id: 3,
+    jobTitle: "Graphic Designer",
+    companyName: "Farmer",
+    logo: "https://preview.colorlib.com/theme/jobsco/assets/img/icon/3.svg",
+    desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore fugit minima suscipit labore maiores sunt aliquam.",
+    location: "Sarajevo, BiH",
+    salary: "2,000 BAM - 3,500 BAM",
+    type: "Part Time",
+    experience: [
+      "Creating visually appealing designs for various mediums",
+      "Proficiency in Adobe Creative Suite (Photoshop, Illustrator, InDesign)",
+      "Understanding of design principles and typography",
+      "Ability to conceptualize and execute design ideas",
+      "Collaborating with cross-functional teams",
+    ],
+    skills: [
+      "Adobe Creative Suite",
+      "Photoshop",
+      "Illustrator",
+      "InDesign",
+      "Design Principles",
+      "Typography",
+      "Visual Communication",
+    ],
+  },
+];
+
+export const detail = {
+  id: 1,
+  jobTitle: "Figma Design Expert",
+  companyName: "Loom",
+  logo: "https://preview.colorlib.com/theme/jobsco/assets/img/icon/1.svg",
+  desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla tempore eaque unde praesentium veniam placeat quaerat nisi dolore ut! Omnis eveniet dignissimos saepe cumque placeat.",
+  location: "Zenica, BiH",
+  salary: "2,500 BAM - 3,500 BAM",
+  type: "Remote",
+  experience: [
+    "Figma - and using it the right way",
+    "Designing with modern systems and design languages",
+    "Developing modern web and app development, including progressive and responsive designs",
+    "Develop final designs from conceptual mockups and wireframes",
+  ],
+  skills: [
+    "User Interface Design",
+    "Figma",
+    "Wireframing",
+    "User Experience",
+    "Styleguide",
+    "Proptotyping",
+    "Website",
+    "Landing Page",
+  ],
+};
