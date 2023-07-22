@@ -4,6 +4,7 @@ import { Dropdown, Navbar } from "flowbite-react";
 import { Avatar } from "flowbite-react";
 import Image from "next/image";
 import logo from "@/images/logo2.png";
+import Link from "next/link";
 
 const NavbarMenu = () => {
   const register = false;
@@ -41,9 +42,12 @@ const NavbarMenu = () => {
           </Dropdown>
         ) : (
           <div className="button-container mr-4 md:mr-8">
-            <button className="bg-[#438dfc] py-2 px-6 md:mx-8 rounded-md text-white border border-solid border-gray-300 hover:text-[#438dfc] hover:bg-white duration-200 font-medium">
+            <Link
+              href="/sign-in"
+              className="bg-[#438dfc] py-2 px-6 md:mx-8 rounded-md text-white border border-solid border-gray-300 hover:text-[#438dfc] hover:bg-white duration-200 font-medium"
+            >
               Login
-            </button>
+            </Link>
           </div>
         )}
         <Navbar.Toggle />

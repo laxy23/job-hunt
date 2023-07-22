@@ -1,50 +1,67 @@
 import { detail } from "@/app/utils/Data";
+import { RiMoneyDollarBoxLine } from "react-icons/ri";
+import { VscTypeHierarchySuper } from "react-icons/vsc";
+import { BiSolidBadgeCheck } from "react-icons/bi";
+import { HiOutlineLocationMarker } from "react-icons/hi";
 
 const JobDetail = () => {
   return (
-    <section id="mb" className="container mx-auto px-6 mt-8 lg:mt-1">
+    <section id="mb" className="container mx-auto px-6 mt-8">
       <div className="flex flex-col">
-        <div className="flex">
+        <div className="flex gap-6 md:gap-8 mb-8">
           <img src={detail.logo} alt="company logo" />
           <div className="flex flex-col">
-            <h3 className="text-xl bold">{detail.jobTitle}</h3>
-            <ul className="flex gap-4">
-              <li>
+            <h3 className="text-xl font-bold mb-2">{detail.jobTitle}</h3>
+            <ul className="flex text-gray-400 gap-10">
+              <li className="flex justify-center items-center gap-2">
                 {" "}
-                <span>Marker</span> {detail.location}
+                <span className="text-primaryColor font-bold flex justify-center items-center text-[18px]">
+                  <HiOutlineLocationMarker />
+                </span>{" "}
+                {detail.location}
               </li>
               <li className="list-disc">2 Hours ago</li>
             </ul>
           </div>
         </div>
-        <div className="flex gap-4">
-          <div className="p-5 flex gap-4 border border-solid border-secondaryColor">
-            <span>Money icon</span>
+        <div className="flex gap-8 mb-6 flex-col md:flex-row">
+          <div className="p-5 flex gap-4 border border-solid border-gray-400">
+            <span className="flex items-center text-3xl bg-gray-300 p-[12px] text-gray-700 rounded-full">
+              <RiMoneyDollarBoxLine />
+            </span>
             <div className="flex flex-col">
-              <h3>{detail.salary}</h3>
+              <h3 className="font-bold">{detail.salary}</h3>
               <span className="text-secondaryColor">Avg. salary</span>
             </div>
           </div>
-          <div className="p-5 flex gap-4">
-            <span>Type Icon</span>
+          <div className="p-5 flex gap-4 border border-solid border-gray-400">
+            <span className="flex items-center text-3xl bg-gray-300 p-[12px] text-gray-700 rounded-full">
+              <VscTypeHierarchySuper />
+            </span>
             <div className="flex flex-col">
-              <h3>{detail.type}</h3>
+              <h3 className="font-bold">{detail.type} Friendly</h3>
               <span className="text-secondaryColor">Job Type</span>
             </div>
           </div>
         </div>
         <hr />
-        <h3 className="font-bold">About the job</h3>
-        <p className="text-secondaryColor">{detail.desc}</p>
-        <h3 className="font-bold">Required Expereince :</h3>
+        <h3 className="font-bold mt-8 text-xl">About the job :</h3>
+        <p className="text-secondaryColor mt-2">{detail.desc}</p>
+        <h3 className="font-bold mt-4 text-xl">Required Expereince :</h3>
         <ul>
           {detail.experience.map((data, i) => (
-            <li className="flex gap-4 items-center" key={i}>
-              <span>check icon</span> {data}
+            <li
+              className="flex gap-4 items-center text-secondaryColor mt-2"
+              key={i}
+            >
+              <span className="text-primaryColor">
+                <BiSolidBadgeCheck />
+              </span>{" "}
+              {data}
             </li>
           ))}
         </ul>
-        <h3 className="font-bold">Skills and Expertise : </h3>
+        <h3 className="font-bold mt-4 text-xl mb-4">Skills and Expertise : </h3>
         <ul className="flex flex-wrap gap-2 mb-4">
           {detail.skills.map((data, i) => (
             <li
@@ -55,8 +72,8 @@ const JobDetail = () => {
             </li>
           ))}
         </ul>
-        <h3 className="font-bold">About the client</h3>
-        <p>
+        <h3 className="font-bold mt-4 text-xl">About the client : </h3>
+        <p className="text-secondaryColor mb-6">
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod dolorem
           corporis, velit quia laudantium, id ullam quas repellendus,
           consectetur quibusdam asperiores totam vel atque veniam.
