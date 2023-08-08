@@ -5,9 +5,11 @@ import { Avatar } from "flowbite-react";
 import Image from "next/image";
 import logo from "@/images/logo2.png";
 import Link from "next/link";
+import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 
 const NavbarMenu = () => {
   const register = false;
+
   return (
     <Navbar fluid rounded className="border-b border-gray-300">
       <Navbar.Brand href="/">
@@ -17,8 +19,8 @@ const NavbarMenu = () => {
         </span>
       </Navbar.Brand>
       <div className="flex md:order-2">
-        {register ? (
-          <Dropdown
+        <SignedIn>
+          {/* <Dropdown
             inline
             label={
               <Avatar
@@ -39,8 +41,10 @@ const NavbarMenu = () => {
             <Dropdown.Item>Earnings</Dropdown.Item>
             <Dropdown.Divider />
             <Dropdown.Item>Sign out</Dropdown.Item>
-          </Dropdown>
-        ) : (
+          </Dropdown> */}
+          <UserButton afterSignOutUrl="/" />
+        </SignedIn>
+        <SignedOut>
           <div className="button-container mr-4 md:mr-8">
             <Link
               href="/sign-in"
@@ -49,7 +53,7 @@ const NavbarMenu = () => {
               Login
             </Link>
           </div>
-        )}
+        </SignedOut>
         <Navbar.Toggle />
       </div>
       <Navbar.Collapse>

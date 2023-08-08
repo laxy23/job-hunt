@@ -1,8 +1,6 @@
 "use client";
 import { useState } from "react";
 import { IoIosCloseCircleOutline } from "react-icons/io";
-import { FaMapMarkerAlt } from "react-icons/fa";
-import { Dropdown } from "flowbite-react";
 import Checkbox from "@mui/material/Checkbox";
 import Slider from "@mui/material/Slider";
 import Box from "@mui/material/Box";
