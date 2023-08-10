@@ -125,9 +125,10 @@ export const jobs = [
     jobTitle: "Figma Design Expert",
     companyName: "Loom",
     logo: "https://preview.colorlib.com/theme/jobsco/assets/img/icon/1.svg",
-    desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla tempore eaque unde praesentium veniam placeat quaerat nisi dolore ut! Omnis eveniet dignissimos saepe cumque placeat.",
+    description:
+      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla tempore eaque unde praesentium veniam placeat quaerat nisi dolore ut! Omnis eveniet dignissimos saepe cumque placeat.",
     location: "Zenica, BiH",
-    salary: "2,500 BAM - 3,500 BAM",
+    salary: 2.5,
     type: "Remote",
     experience: [
       'Figma - and using it "the right way", "Designing with modern systems and design languages',
@@ -150,9 +151,10 @@ export const jobs = [
     jobTitle: "Web Developer",
     companyName: "Hubspot",
     logo: "https://preview.colorlib.com/theme/jobsco/assets/img/icon/2.svg",
-    desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas laborum magnam explicabo recusandae, cum aliquid ullam.",
+    description:
+      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas laborum magnam explicabo recusandae, cum aliquid ullam.",
     location: "Remote",
-    salary: "4,000 BAM - 5,000 BAM",
+    salary: 4.0,
     type: "Full Time",
     experience: [
       "Building and maintaining responsive websites",
@@ -179,9 +181,10 @@ export const jobs = [
     jobTitle: "Graphic Designer",
     companyName: "Farmer",
     logo: "https://preview.colorlib.com/theme/jobsco/assets/img/icon/3.svg",
-    desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore fugit minima suscipit labore maiores sunt aliquam.",
+    description:
+      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore fugit minima suscipit labore maiores sunt aliquam.",
     location: "Sarajevo, BiH",
-    salary: "2,000 BAM - 3,500 BAM",
+    salary: 2.999,
     type: "Part Time",
     experience: [
       "Creating visually appealing designs for various mediums",
@@ -207,9 +210,10 @@ export const detail = {
   jobTitle: "Figma Design Expert",
   companyName: "Loom",
   logo: "https://preview.colorlib.com/theme/jobsco/assets/img/icon/1.svg",
-  desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla tempore eaque unde praesentium veniam placeat quaerat nisi dolore ut! Omnis eveniet dignissimos saepe cumque placeat.",
+  description:
+    "Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla tempore eaque unde praesentium veniam placeat quaerat nisi dolore ut! Omnis eveniet dignissimos saepe cumque placeat.",
   location: "Zenica, BiH",
-  salary: "2,500 BAM - 3,500 BAM",
+  salary: 2.522,
   type: "Remote",
   experience: [
     "Figma - and using it the right way",
