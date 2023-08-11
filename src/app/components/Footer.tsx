@@ -22,9 +22,10 @@ const Footer = () => {
           <div>
             <Image
               src={footer}
-              layout="responsive"
-              height={1000}
-              width={1000}
+              width={0}
+              height={0}
+              sizes="100vw"
+              style={{ width: "100%", height: "auto" }}
               alt="footer"
             />
           </div>

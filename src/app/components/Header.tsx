@@ -79,9 +79,10 @@ const Header = () => {
         <div className="lg:p-[45px] justify-center items-center hidden lg:flex">
           <Image
             src={header}
-            layout="responsive"
-            width={500}
-            height={600}
+            width={0}
+            height={0}
+            sizes="100vw"
+            style={{ width: "100%", height: "auto" }}
             alt="header"
           />
         </div>

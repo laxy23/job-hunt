@@ -53,7 +53,7 @@ const JobList = () => {
                   </li>
                 ))}
               </ul>
-              <p className="text-secondaryColor">{data.desc}</p>
+              <p className="text-secondaryColor">{data.description}</p>
             </div>
           ))}
         </div>

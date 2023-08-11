@@ -46,7 +46,43 @@ const SignUpPage = () => {
     }
   };
 
-  const handleSubmit = () => {};
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (state === "employee") {
+      try {
+        const res = await fetch("/api/auth/register", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            form,
+          }),
+        });
+
+        console.log(res.json());
+      } catch (error) {
+        console.log(error);
+      }
+    } else if (state === "company") {
+      try {
+        const res = await fetch("/api/auth/register", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            form2,
+          }),
+        });
+
+        console.log(res.json());
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  };
 
   return (
     <section className="container mx-auto px-6 mt-4 mb-20">

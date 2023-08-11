@@ -1,14 +1,17 @@
 "use client";
 
-import { Dropdown, Navbar } from "flowbite-react";
-import { Avatar } from "flowbite-react";
+import { Navbar } from "flowbite-react";
+import { useSession } from "next-auth/react";
 import Image from "next/image";
 import logo from "@/images/logo2.png";
 import Link from "next/link";
-import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 
 const NavbarMenu = () => {
   const register = false;
+
+  const session = useSession();
+
+  console.log(session);
 
   return (
     <Navbar fluid rounded className="border-b border-gray-300">
@@ -19,8 +22,7 @@ const NavbarMenu = () => {
         </span>
       </Navbar.Brand>
       <div className="flex md:order-2">
-        <SignedIn>
-          {/* <Dropdown
+        {/* <Dropdown
             inline
             label={
               <Avatar
@@ -42,18 +44,14 @@ const NavbarMenu = () => {
             <Dropdown.Divider />
             <Dropdown.Item>Sign out</Dropdown.Item>
           </Dropdown> */}
-          <UserButton afterSignOutUrl="/" />
-        </SignedIn>
-        <SignedOut>
-          <div className="button-container mr-4 md:mr-8">
-            <Link
-              href="/sign-in"
-              className="bg-[#438dfc] py-2 px-6 md:mx-8 rounded-md text-white border border-solid border-gray-300 hover:text-[#438dfc] hover:bg-white duration-200 font-medium"
-            >
-              Login
-            </Link>
-          </div>
-        </SignedOut>
+        <div className="button-container mr-4 md:mr-8">
+          <Link
+            href="/sign-in"
+            className="bg-[#438dfc] py-2 px-6 md:mx-8 rounded-md text-white border border-solid border-gray-300 hover:text-[#438dfc] hover:bg-white duration-200 font-medium"
+          >
+            Login
+          </Link>
+        </div>
         <Navbar.Toggle />
       </div>
       <Navbar.Collapse>

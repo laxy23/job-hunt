@@ -1,40 +1,26 @@
 "use client";
 import { useState } from "react";
-import { useSignIn } from "@clerk/nextjs";
-import { useRouter } from "next/navigation";
 import sign from "@/images/signIn.png";
 import Image from "next/image";
 import Link from "next/link";
 
 const SignInPage = () => {
-  const { isLoaded, signIn, setActive } = useSignIn();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const router = useRouter();
+  const [form, setForm] = useState({
+    email: "",
+    password: "",
+  });
+
+  const { email, password } = form;
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!isLoaded) {
-      return;
-    }
+  };
 
-    try {
-      const result = await signIn.create({
-        identifier: email,
-        password,
-      });
-
-      if (result.status === "complete") {
-        console.log(result);
-        await setActive({ session: result.createdSessionId });
-        router.push("/");
-      } else {
-        /*Investigate why the login hasn't completed */
-        console.log(result);
-      }
-    } catch (err: any) {
-      console.error("error", err.errors[0].longMessage);
-    }
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setForm((prev) => ({
+      ...prev,
+      [e.target.name]: e.target.value,
+    }));
   };
 
   return (
@@ -66,7 +52,7 @@ const SignInPage = () => {
                     type="email"
                     value={email}
                     name="email"
-                    onChange={(e) => setEmail(e.target.value)}
+                    onChange={handleChange}
                     id="email"
                     className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     placeholder="name@company.com"
@@ -84,7 +70,7 @@ const SignInPage = () => {
                     name="password"
                     value={password}
                     id="password"
-                    onChange={(e) => setPassword(e.target.value)}
+                    onChange={handleChange}
                     placeholder="••••••••"
                     className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   />
@@ -131,9 +117,10 @@ const SignInPage = () => {
         <div className="col-span-1 flex items-center">
           <Image
             src={sign}
-            layout="responsive"
-            width={500}
-            height={500}
+            width={0}
+            height={0}
+            sizes="100vw"
+            style={{ width: "100%", height: "auto" }}
             alt="Sign In"
           />
         </div>
