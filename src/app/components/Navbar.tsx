@@ -1,17 +1,23 @@
 "use client";
 
 import { Navbar } from "flowbite-react";
-import { useSession } from "next-auth/react";
+import { useSession, signOut } from "next-auth/react";
 import Image from "next/image";
 import logo from "@/images/logo2.png";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { Dropdown, Avatar } from "flowbite-react";
 
 const NavbarMenu = () => {
   const register = false;
+  const router = useRouter();
 
   const session = useSession();
 
-  console.log(session);
+  const handleSignOut = () => {
+    signOut({ redirect: false });
+    router.push("/sign-in");
+  };
 
   return (
     <Navbar fluid rounded className="border-b border-gray-300">
@@ -22,35 +28,38 @@ const NavbarMenu = () => {
         </span>
       </Navbar.Brand>
       <div className="flex md:order-2">
-        {/* <Dropdown
-            inline
-            label={
-              <Avatar
-                alt="User settings"
-                img="https://flowbite.com/docs/images/people/profile-picture-5.jpg"
-                rounded
-              />
-            }
-          >
-            <Dropdown.Header>
-              <span className="block text-sm">Bonnie Green</span>
-              <span className="block truncate text-sm font-medium">
-                name@flowbite.com
-              </span>
-            </Dropdown.Header>
-            <Dropdown.Item>Dashboard</Dropdown.Item>
-            <Dropdown.Item>Settings</Dropdown.Item>
-            <Dropdown.Item>Earnings</Dropdown.Item>
-            <Dropdown.Divider />
-            <Dropdown.Item>Sign out</Dropdown.Item>
-          </Dropdown> */}
         <div className="button-container mr-4 md:mr-8">
-          <Link
-            href="/sign-in"
-            className="bg-[#438dfc] py-2 px-6 md:mx-8 rounded-md text-white border border-solid border-gray-300 hover:text-[#438dfc] hover:bg-white duration-200 font-medium"
-          >
-            Login
-          </Link>
+          {session.status === "unauthenticated" ? (
+            <Link
+              href="/sign-in"
+              className="bg-[#438dfc] py-2 px-6 md:mx-8 rounded-md text-white border border-solid border-gray-300 hover:text-[#438dfc] hover:bg-white duration-200 font-medium"
+            >
+              Login
+            </Link>
+          ) : (
+            <Dropdown
+              inline
+              label={
+                <Avatar
+                  alt="User settings"
+                  img="https://flowbite.com/docs/images/people/profile-picture-5.jpg"
+                  rounded
+                />
+              }
+            >
+              <Dropdown.Header>
+                <span className="block text-sm">{session.data?.user.name}</span>
+                <span className="block truncate text-sm font-medium">
+                  {session.data?.user.email}
+                </span>
+              </Dropdown.Header>
+              <Dropdown.Item>
+                <Link href="/profile">Profile</Link>
+              </Dropdown.Item>
+              <Dropdown.Divider />
+              <Dropdown.Item onClick={handleSignOut}>Sign out</Dropdown.Item>
+            </Dropdown>
+          )}
         </div>
         <Navbar.Toggle />
       </div>

@@ -15,8 +15,7 @@ const SignUpPage = () => {
   const [state, setState] = useState("employee");
   const [form, setForm] = useState({
     email: "",
-    firstName: "",
-    lastName: "",
+    name: "",
     password: "",
     role: "employee",
   });
@@ -25,12 +24,12 @@ const SignUpPage = () => {
     companyName: "",
     companyEmail: "",
     companyPassword: "",
-    role: "company",
+    companyRole: "company",
   });
 
-  const { email, firstName, lastName, password } = form;
+  const { email, name, password, role } = form;
 
-  const { companyName, companyEmail, companyPassword } = form2;
+  const { companyName, companyEmail, companyPassword, companyRole } = form2;
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (state === "employee") {
@@ -51,33 +50,43 @@ const SignUpPage = () => {
 
     if (state === "employee") {
       try {
-        const res = await fetch("/api/auth/register", {
+        const res = await fetch("http://localhost:3000/api/auth/register", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            form,
+            name,
+            email,
+            password,
+            role,
           }),
         });
 
-        console.log(res.json());
+        const result = await res.json();
+
+        console.log(result);
       } catch (error) {
         console.log(error);
       }
     } else if (state === "company") {
       try {
-        const res = await fetch("/api/auth/register", {
+        const res = await fetch("http://localhost:3000/api/auth/register", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            form2,
+            companyName,
+            companyEmail,
+            companyPassword,
+            companyRole,
           }),
         });
 
-        console.log(res.json());
+        const result = await res.json();
+
+        console.log(result);
       } catch (error) {
         console.log(error);
       }
@@ -108,11 +117,7 @@ const SignUpPage = () => {
                 </Button.Group>
               </div>
               {state === "employee" ? (
-                <form
-                  onClick={handleSubmit}
-                  className="space-y-4 md:space-y-6"
-                  action="#"
-                >
+                <form className="space-y-4 md:space-y-6" action="#">
                   <div>
                     <label
                       htmlFor="firstName"
@@ -122,29 +127,12 @@ const SignUpPage = () => {
                     </label>
                     <input
                       type="text"
-                      value={firstName}
-                      name="firstName"
+                      value={name}
+                      name="name"
                       onChange={handleChange}
                       id="firstName"
                       className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                       placeholder="John"
-                    />
-                  </div>
-                  <div>
-                    <label
-                      htmlFor="lastName"
-                      className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                    >
-                      Your lastname
-                    </label>
-                    <input
-                      type="text"
-                      value={lastName}
-                      name="lastName"
-                      onChange={handleChange}
-                      id="lastName"
-                      className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                      placeholder="Doe"
                     />
                   </div>
                   <div>
@@ -204,6 +192,7 @@ const SignUpPage = () => {
                   <button
                     type="submit"
                     className="bg-[#438dfc] py-2 px-6 rounded-md text-white border border-solid border-gray-300 hover:text-[#438dfc] hover:bg-white duration-200 font-medium w-full"
+                    onClick={handleSubmit}
                   >
                     Sign up
                   </button>
@@ -219,9 +208,9 @@ const SignUpPage = () => {
                 </form>
               ) : state === "company" ? (
                 <form
-                  onClick={handleSubmit}
                   className="space-y-4 md:space-y-6"
                   action="#"
+                  onSubmit={handleSubmit}
                 >
                   <div>
                     <label

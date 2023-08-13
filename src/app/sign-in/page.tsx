@@ -3,8 +3,11 @@ import { useState } from "react";
 import sign from "@/images/signIn.png";
 import Image from "next/image";
 import Link from "next/link";
+import { signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 const SignInPage = () => {
+  const router = useRouter();
   const [form, setForm] = useState({
     email: "",
     password: "",
@@ -14,6 +17,17 @@ const SignInPage = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    const signInReposnse = await signIn("credentials", {
+      ...form,
+      redirect: false,
+    });
+
+    if (signInReposnse?.error) {
+      console.log(signInReposnse.error);
+    } else if (signInReposnse?.status === 200 && !signInReposnse.error) {
+      router.push("/");
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -37,7 +51,7 @@ const SignInPage = () => {
                 Sign in to your account
               </h1>
               <form
-                onClick={handleSubmit}
+                onSubmit={handleSubmit}
                 className="space-y-4 md:space-y-6"
                 action="#"
               >

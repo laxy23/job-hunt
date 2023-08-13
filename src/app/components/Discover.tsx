@@ -8,9 +8,14 @@ import { BsArrowRight } from "react-icons/bs";
 import { Button } from "flowbite-react";
 import { useEffect, useState } from "react";
 import JobCard from "./utils/JobCard";
+import { useSession } from "next-auth/react";
 
 const Discover = () => {
   const [type, setType] = useState("popular");
+
+  const session = useSession();
+
+  console.log(session);
 
   useEffect(() => {
     console.log(type);
