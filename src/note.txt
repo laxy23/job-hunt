@@ -1,0 +1,3 @@
+Profile stranica : 
+- Omoguciti useru da moze promjeniti svoje ime i email.
+- Omoguciti useru da moze uploudovati slike.
