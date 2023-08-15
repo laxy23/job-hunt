@@ -6,15 +6,28 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
-import { useState, ChangeEvent } from "react";
+import { useState, useEffect, ChangeEvent } from "react";
 import Details from "../components/utils/Details";
+import { useSession } from "next-auth/react";
 
 const CreateJob = () => {
+  const session = useSession();
   const [location, setLocation] = useState("");
   const [type, setType] = useState("");
   const [state, setState] = useState(1);
 
+  useEffect(() => {
+    if (session?.data?.user.email) {
+      setForm((prevState) => ({
+        ...prevState,
+        logo: session.data.user.photo,
+        mail: session.data.user.email,
+      }));
+    }
+  }, [session]);
+
   const [form, setForm] = useState({
+    logo: "",
     jobTitle: "",
     description: "",
     date: "",
@@ -279,7 +292,7 @@ const CreateJob = () => {
                   htmlFor="Job Duration"
                   className="block mb-4 text-base font-bold text-gray-900 dark:text-white"
                 >
-                  Job Duration
+                  Job Duration - In Days
                 </label>
                 <input
                   type="number"
@@ -288,7 +301,7 @@ const CreateJob = () => {
                   onChange={handleInputChange}
                   id="Job Duration"
                   className="border border-gray-300 text-gray-900 rounded-sm block w-full p-3 text-[16px] dark:placeholder-gray-400 dark:text-white dark:focus:ring-primaryColor dark:focus:border-primaryColor"
-                  placeholder="Duration"
+                  placeholder="In Days"
                 />
               </div>
             </div>
@@ -364,6 +377,7 @@ const CreateJob = () => {
               >
                 Salary
               </label>
+              <p className="text-sm text-secondaryColor mb-4">In BAM!</p>
               <input
                 type="number"
                 name="salary"

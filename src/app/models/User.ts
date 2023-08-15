@@ -21,9 +21,10 @@ const userSchema = new Schema(
       enum: ["employee", "company", "admin"],
       default: "employee",
     },
-    companyPhoto: {
+    photo: {
       type: String,
-      default: "user.png",
+      default:
+        "https://utfs.io/f/46cf1157-84dc-4979-9ffb-ab9519624875_user.png",
     },
     myJobs: {
       type: [mongoose.Schema.Types.ObjectId],

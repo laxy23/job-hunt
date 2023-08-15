@@ -33,7 +33,14 @@ const Details: React.FC<DetailsProps> = ({
     <div>
       <div className="flex flex-col">
         <div className="flex gap-6 md:gap-8 mb-8">
-          <img src={detail.logo} alt="company logo" />
+          <img
+            src={detail.logo}
+            alt="company logo"
+            style={{
+              width: "110px",
+              height: "110px",
+            }}
+          />
           <div className="flex flex-col">
             <h3 className="text-xl font-bold mb-2">{detail.jobTitle}</h3>
             <ul className="flex text-gray-400 gap-10">
@@ -63,9 +70,7 @@ const Details: React.FC<DetailsProps> = ({
               <VscTypeHierarchySuper />
             </span>
             <div className="flex flex-col">
-              <h3 className="font-bold">
-                {detail.type ? detail.type : type} Friendly
-              </h3>
+              <h3 className="font-bold">{detail.type ? detail.type : type}</h3>
               <span className="text-secondaryColor">Job Type</span>
             </div>
           </div>

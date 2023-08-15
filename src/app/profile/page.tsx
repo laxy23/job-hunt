@@ -1,20 +1,20 @@
 "use client";
 
-import Image from "next/image";
-import user from "@/images/user.png";
 import { useEffect, useState } from "react";
 import JobCard from "../components/utils/JobCard";
 import { discover } from "../utils/Data";
 import Link from "next/link";
 import { useSession } from "next-auth/react";
+import "@uploadthing/react/styles.css";
+import { UploadButton } from "@/app/utils/uploadthing";
+import { UploadFileResponse } from "uploadthing/client";
 
 const Profile = () => {
   const session = useSession();
-  const [firstName, setFirstName] = useState(session?.data?.user.name);
-  const [role, setRole] = useState(session?.data?.user.role);
-  const [email, setEmail] = useState(session?.data?.user.email);
+  const [firstName, setFirstName] = useState<string | undefined>("");
+  const [role, setRole] = useState<string | undefined>("");
+  const [email, setEmail] = useState<string | undefined>("");
   const [inputsFocused, setInputsFocused] = useState(false);
-  const company = true;
 
   const handleCancel = () => {
     setInputsFocused(false);
@@ -23,11 +23,82 @@ const Profile = () => {
     setEmail(session?.data?.user.email);
   };
 
+  const handleSubmit = async () => {
+    console.log(firstName, email);
+    const res = await fetch(
+      `http://localhost:3000/api/job/profile/${session.data?.user._id}?name=${firstName}&email=${email}`,
+      {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+      }
+    );
+
+    const data = await res.json();
+
+    console.log(data, "Data");
+
+    if (data) {
+      const upd = await session.update({
+        ...session.data,
+        user: {
+          ...session.data?.user,
+          email: data.user.email,
+          name: data.user.name,
+        },
+      });
+      console.log(upd, "UPD");
+    }
+
+    window.location.reload();
+  };
+
+  useEffect(() => {
+    if (session?.data?.user) {
+      setFirstName(session.data.user.name);
+      setRole(session.data.user.role);
+      setEmail(session.data.user.email);
+    }
+    console.log(session);
+  }, [session?.data?.user, session.update]);
+
+  const handleUpdateUser = async (
+    response: UploadFileResponse[] | undefined
+  ) => {
+    console.log("Response", response);
+    const res = await fetch(
+      `http://localhost:3000/api/job/${
+        session.data?.user._id
+      }?fileName=https://utfs.io/f/${response ? response[0].key : ""}`,
+      {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+      }
+    );
+
+    const data = await res.json();
+
+    await session.update({
+      ...session.data,
+      user: {
+        ...session.data?.user,
+        photo: data.user.photo,
+      },
+    });
+  };
+
   return (
     <section id="profile" className="container mx-auto px-6 mt-8 mb-20">
       <div className="flex flex-col md:flex-row gap-8 justify-start items-start md:items-center md:justify-between">
         <div className="flex gap-4">
-          <Image src={user} alt="user profile" width={150} height={150} />
+          <img
+            src={`${session.data?.user.photo}`}
+            alt="profile"
+            className="rounded-full"
+            style={{
+              width: "150px",
+              height: "150px",
+            }}
+          />
           <div className="flex flex-col">
             <h3 className="text-3xl pt-4 font-bold">
               {session?.data?.user.name}
@@ -68,7 +139,10 @@ const Profile = () => {
               >
                 Cancel
               </button>
-              <button className="bg-[#438dfc] py-2 px-6 rounded-md text-white border border-solid border-gray-300 hover:text-[#438dfc] hover:bg-white duration-200 font-medium">
+              <button
+                onClick={handleSubmit}
+                className="bg-[#438dfc] py-2 px-6 rounded-md text-white border border-solid border-gray-300 hover:text-[#438dfc] hover:bg-white duration-200 font-medium"
+              >
                 Save Changes
               </button>
             </>
@@ -86,7 +160,7 @@ const Profile = () => {
         <div className="flex flex-col w-full md:w-1/2 gap-4">
           <input
             type="text"
-            value={firstName}
+            value={firstName ? firstName : ""}
             name="firstName"
             onChange={(e) => setFirstName(e.target.value)}
             id="firstName"
@@ -130,7 +204,15 @@ const Profile = () => {
           </p>
         </div>
         <div className="flex gap-12 items-center flex-col lg:flex-row">
-          <Image src={user} width={150} height={150} alt="company logo" />
+          <img
+            src={`${session.data?.user.photo}`}
+            alt="profile"
+            className="rounded-full"
+            style={{
+              width: "150px",
+              height: "150px",
+            }}
+          />
           <div className="w-full">
             <label
               htmlFor="images"
@@ -139,13 +221,17 @@ const Profile = () => {
             >
               <span className="drop-title">Drop files here</span>
               or
-              <input
-                className="ml-16"
-                type="file"
-                id="images"
-                accept="image/*"
-                required
-                onFocus={() => setInputsFocused(true)}
+              <UploadButton
+                endpoint="imageUploader"
+                onClientUploadComplete={(res) => {
+                  // Do something with the response
+                  handleUpdateUser(res);
+                  alert("Upload Completed");
+                }}
+                onUploadError={(error: Error) => {
+                  // Do something with the error.
+                  alert(`ERROR! ${error.message}`);
+                }}
               />
             </label>
           </div>

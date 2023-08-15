@@ -1,0 +1,75 @@
+import connect from "@/app/utils/connect";
+import { NextRequest, NextResponse } from "next/server";
+import User from "@/app/models/User";
+import Job from "@/app/models/Job";
+
+export const PUT = async (
+  req: NextRequest,
+  route: { params: { id: string } }
+) => {
+  try {
+    await connect();
+    const url = new URL(req.url);
+    console.log(url);
+    const id = route.params.id;
+
+    console.log(id);
+    const fileName = url.searchParams.get("fileName");
+
+    console.log(fileName);
+
+    const user = await User.findByIdAndUpdate(
+      id,
+      {
+        photo: fileName,
+      },
+      { new: true }
+    );
+
+    return NextResponse.json({ user }, { status: 200 });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const POST = async (
+  req: NextRequest,
+  route: { params: { id: string } }
+) => {
+  try {
+    await connect();
+    const data = await req.json();
+    const id = route.params.id;
+
+    const {
+      jobTitle,
+      companyName,
+      logo,
+      description,
+      location,
+      salary,
+      type,
+      experience,
+      skills,
+    } = data;
+
+    const newJob = {
+      jobTitle,
+      companyName,
+      logo,
+      description,
+      location,
+      salary,
+      type,
+      experience,
+      skills,
+      user: id,
+    };
+
+    const job = await Job.create(newJob);
+
+    return NextResponse.json({ job }, { status: 201 });
+  } catch (error) {
+    console.log(error);
+  }
+};

@@ -1,3 +1,11 @@
 Profile stranica : 
 - Omoguciti useru da moze promjeniti svoje ime i email.
 - Omoguciti useru da moze uploudovati slike.
+
+Omoguciti useru da moze updateovati ime i email
+
+https://utfs.io/f/dc09af8a-b6bb-4e51-a373-542328255ba4_english%20grammar%20roadmap.png
+
+https://utfs.io/f/46cf1157-84dc-4979-9ffb-ab9519624875_user.png
+
+https://uploadthing.com/f/dc09af8a-b6bb-4e51-a373-542328255ba4_english grammar roadmap.png
