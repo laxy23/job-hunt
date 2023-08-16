@@ -9,11 +9,22 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import { experience } from "../utils/Data";
+import React from "react";
 
 const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
 const Filter = () => {
   const [location, setLocation] = useState("");
+  const [price, setPrice] = useState(2500);
+  const [avability, setAvability] = useState<string[]>([]);
+  const [experienceFilter, setExperienceFilter] = useState<string[]>([]);
+
+  const handleClear = () => {
+    setLocation("");
+    setPrice(2500);
+    setAvability([]);
+    setExperienceFilter([]);
+  };
 
   const handleChange = (event: SelectChangeEvent) => {
     setLocation(event.target.value as string);
@@ -27,6 +38,39 @@ const Filter = () => {
     "Bihac",
     "Bijeljina",
   ];
+
+  const handlePriceChange = (
+    event: Event,
+    newValue: number | number[],
+    activeThumb: number
+  ) => {
+    if (typeof newValue === "number") {
+      setPrice(newValue);
+    }
+  };
+
+  const handleAvabilityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+
+    if (e.target.checked) {
+      setAvability([...avability, value]);
+    } else {
+      setAvability(avability.filter((item) => item !== value));
+    }
+  };
+
+  const handleExperienceFilterChange = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const value = e.target.value;
+
+    if (e.target.checked) {
+      setExperienceFilter([...experienceFilter, value]);
+    } else {
+      setExperienceFilter(experienceFilter.filter((item) => item !== value));
+    }
+  };
+
   return (
     <section
       id="filter"
@@ -34,7 +78,10 @@ const Filter = () => {
     >
       <div className="flex justify-between">
         <h3 className="text-xl font-bold">Filter</h3>
-        <button className="flex items-center text-gray-500 gap-3 font-bold">
+        <button
+          className="flex items-center text-gray-500 gap-3 font-bold"
+          onClick={handleClear}
+        >
           Clear All{" "}
           <span>
             <IoIosCloseCircleOutline />
@@ -44,12 +91,13 @@ const Filter = () => {
       <div className="flex flex-col mt-4">
         <h3 className="text-xl mt-4 font-bold mb-4">Salary</h3>
         <Slider
-          defaultValue={2500}
+          value={price}
           aria-label="Default"
           valueLabelDisplay="auto"
           max={5000}
           min={500}
           step={500}
+          onChange={handlePriceChange}
         />
         <div className="flex justify-between">
           <span>$500</span>
@@ -82,15 +130,27 @@ const Filter = () => {
         <div className="flex items-center">
           <ul className="flex flex-wrap gap-2">
             <li className="flex items-center">
-              <Checkbox {...label} />{" "}
-              <span className="text-gray-500">Full Time</span>
+              <Checkbox
+                {...label}
+                value="Full time"
+                onChange={handleAvabilityChange}
+              />
+              <span className="text-gray-500">Full time</span>
             </li>
             <li className="flex items-center">
-              <Checkbox {...label} />{" "}
-              <span className="text-gray-500">Part Time</span>
+              <Checkbox
+                {...label}
+                value="Part time"
+                onChange={handleAvabilityChange}
+              />{" "}
+              <span className="text-gray-500">Part time</span>
             </li>
             <li className="flex items-center">
-              <Checkbox {...label} />{" "}
+              <Checkbox
+                {...label}
+                value="Freelance"
+                onChange={handleAvabilityChange}
+              />{" "}
               <span className="text-gray-500">Freelance</span>
             </li>
           </ul>
@@ -98,13 +158,23 @@ const Filter = () => {
       </div>
       <div className="flex flex-col mt-4">
         <h3 className="text-xl mt-4 font-bold mb-4">Experience</h3>
-        <ul></ul>
-        {experience.map((data) => (
-          <li className="flex items-center" key={data.id}>
-            <Checkbox {...label} />{" "}
-            <span className="text-gray-500">{data.content}</span>
-          </li>
-        ))}
+        <ul>
+          {experience.map((data) => (
+            <li className="flex items-center" key={data.id}>
+              <Checkbox
+                value={data.content}
+                onChange={handleExperienceFilterChange}
+                {...label}
+              />{" "}
+              <span className="text-gray-500">{data.content}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+      <div className="mt-4 pb-4">
+        <button className="bg-[#438dfc] py-2 px-6 rounded-md text-white border border-solid border-gray-300 hover:text-[#438dfc] hover:bg-white duration-200 font-medium">
+          Apply Changes
+        </button>
       </div>
     </section>
   );

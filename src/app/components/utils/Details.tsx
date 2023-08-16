@@ -22,13 +22,32 @@ interface DetailsProps {
   type?: string;
   creating?: boolean;
   finished?: boolean;
+  id?: string | undefined;
 }
 const Details: React.FC<DetailsProps> = ({
   detail,
   location,
   type,
   creating,
+  id,
 }) => {
+  const handleSubmit = async () => {
+    console.log(detail);
+    const res = await fetch(`http://localhost:3000/api/job/${id}`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        detail,
+        type,
+        location,
+      }),
+    });
+
+    const data = await res.json();
+
+    console.log(data);
+  };
+
   return (
     <div>
       <div className="flex flex-col">
@@ -138,7 +157,10 @@ const Details: React.FC<DetailsProps> = ({
         </p>
 
         {creating ? (
-          <button className="bg-[#438dfc] rounded-md text-white border border-solid border-gray-300 hover:text-[#438dfc] hover:bg-white duration-200 font-medium flex p-[0.8rem] items-center gap-3 lg:p-4 justify-center">
+          <button
+            onClick={handleSubmit}
+            className="bg-[#438dfc] rounded-md text-white border border-solid border-gray-300 hover:text-[#438dfc] hover:bg-white duration-200 font-medium flex p-[0.8rem] items-center gap-3 lg:p-4 justify-center"
+          >
             Create job
           </button>
         ) : (

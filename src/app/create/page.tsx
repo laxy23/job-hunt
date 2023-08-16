@@ -37,6 +37,8 @@ const CreateJob = () => {
     salary: 0,
     skills: [""],
     experience: [""],
+    location: location,
+    type: type,
   });
 
   const {
@@ -75,6 +77,8 @@ const CreateJob = () => {
       ...prevState,
       [e.target.name]: e.target.value,
     }));
+
+    console.log(form);
 
     if (e.target.name === "experience" || e.target.name === "skills") {
       setForm((prevState) => ({
@@ -452,6 +456,7 @@ const CreateJob = () => {
             location={location}
             type={type}
             creating={true}
+            id={session.data?.user._id}
           />
         )}
 

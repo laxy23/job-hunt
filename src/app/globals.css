@@ -63,6 +63,10 @@ body {
   text-align: center;
   transition: color 0.2s ease-in-out;
 }
+input[type="checkbox"] {
+  height: 2.5rem !important;
+  width: 2.5rem !important;
+}
 input[type="file"]::file-selector-button {
   margin-right: 20px;
   border: none;

@@ -39,6 +39,9 @@ export const POST = async (
   try {
     await connect();
     const data = await req.json();
+
+    console.log(data);
+
     const id = route.params.id;
 
     const {
@@ -46,12 +49,12 @@ export const POST = async (
       companyName,
       logo,
       description,
-      location,
       salary,
-      type,
       experience,
       skills,
-    } = data;
+    } = data.detail;
+
+    const { type, location } = data;
 
     const newJob = {
       jobTitle,
@@ -65,6 +68,8 @@ export const POST = async (
       skills,
       user: id,
     };
+
+    console.log(newJob);
 
     const job = await Job.create(newJob);
 

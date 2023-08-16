@@ -29,15 +29,15 @@ const jobSchema = new Schema(
     },
     type: {
       type: String,
-      enum: ["Remote", "Part Time", "Full Time"],
+      enum: ["Remote", "Part time", "Full time", "Freelance"],
       require: [true, "Jub must have a type"],
     },
     experience: {
-      type: String,
+      type: [String],
       require: [true, "Job must have a experience"],
     },
     skills: {
-      type: String,
+      type: [String],
       require: [true, "Job must have a skills"],
     },
     user: {
