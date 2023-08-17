@@ -2,6 +2,7 @@ import { RiMoneyDollarBoxLine } from "react-icons/ri";
 import { VscTypeHierarchySuper } from "react-icons/vsc";
 import { BiSolidBadgeCheck } from "react-icons/bi";
 import { HiOutlineLocationMarker } from "react-icons/hi";
+import { SiLevelsdotfyi } from "react-icons/si";
 
 interface JobDetail {
   id?: number;
@@ -23,6 +24,7 @@ interface DetailsProps {
   creating?: boolean;
   finished?: boolean;
   id?: string | undefined;
+  experienceLevel?: string | undefined;
 }
 const Details: React.FC<DetailsProps> = ({
   detail,
@@ -30,6 +32,7 @@ const Details: React.FC<DetailsProps> = ({
   type,
   creating,
   id,
+  experienceLevel,
 }) => {
   const handleSubmit = async () => {
     console.log(detail);
@@ -40,6 +43,7 @@ const Details: React.FC<DetailsProps> = ({
         detail,
         type,
         location,
+        experienceLevel,
       }),
     });
 
@@ -91,6 +95,17 @@ const Details: React.FC<DetailsProps> = ({
             <div className="flex flex-col">
               <h3 className="font-bold">{detail.type ? detail.type : type}</h3>
               <span className="text-secondaryColor">Job Type</span>
+            </div>
+          </div>
+          <div className="p-5 flex gap-4 border border-solid border-gray-400">
+            <span className="flex items-center text-3xl bg-gray-300 p-[12px] text-gray-700 rounded-full">
+              <SiLevelsdotfyi />
+            </span>
+            <div className="flex flex-col">
+              <h3 className="font-bold">
+                {experienceLevel ? experienceLevel : ""}
+              </h3>
+              <span className="text-secondaryColor">Expereince Level</span>
             </div>
           </div>
         </div>

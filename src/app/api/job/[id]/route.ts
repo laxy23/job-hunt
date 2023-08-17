@@ -54,7 +54,7 @@ export const POST = async (
       skills,
     } = data.detail;
 
-    const { type, location } = data;
+    const { type, location, experienceLevel } = data;
 
     const newJob = {
       jobTitle,
@@ -62,6 +62,7 @@ export const POST = async (
       logo,
       description,
       location,
+      experienceLevel,
       salary,
       type,
       experience,

@@ -2,6 +2,8 @@
 
 import { jobs } from "../utils/Data";
 import { BiSearchAlt } from "react-icons/bi";
+import { useState } from "react";
+import React from "react";
 
 interface Job {
   _id: string;
@@ -21,23 +23,43 @@ interface Job {
 }
 
 interface JobListProps {
-  jobsdata: Job[];
+  jobsdata: Job[] | undefined;
+  companyName: string | undefined;
 }
 
-const JobList = ({ jobsdata }: JobListProps) => {
-  console.log(jobsdata);
+const JobList = ({ jobsdata, companyName }: JobListProps) => {
+  const [searchValue, setSearchValue] = useState("");
+
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchValue(e.target.value);
+  };
+
+  const handleSearchSubmit = async () => {
+    const url = `http://localhost:3000/api/job/?price=${price}&location=${location}&avability=${avability}&experience=${experienceFilter}`;
+
+    const res = await fetch(url);
+
+    const data = await res.json();
+
+    setJobData(data.jobs);
+  };
+
   return (
     <section id="mb" className="container mx-auto px-0 lg:px-12 py-4">
       <div className="flex flex-col">
         <div className="flex flex-col md:flex-row w-full gap-4 lg:gap-12">
           <input
             type="text"
+            onChange={handleSearchChange}
             placeholder="Search by title, company or jobs keyword..."
             className="w-full border border-gray-400 border-solid rounded-md focus:border-primaryColor duration-200"
           />
           <div className="button-container">
-            <button className="bg-[#438dfc] rounded-md text-white border border-solid border-gray-300 hover:text-[#438dfc] hover:bg-white duration-200 font-medium flex p-[0.8rem] items-center gap-3 lg:p-4">
-              Search{" "}
+            <button
+              onClick={handleSearchSubmit}
+              className="bg-[#438dfc] rounded-md text-white border border-solid border-gray-300 hover:text-[#438dfc] hover:bg-white duration-200 font-medium flex p-[0.8rem] items-center gap-3 lg:p-4"
+            >
+              Search
               <span className="text-xl">
                 <BiSearchAlt />
               </span>
@@ -63,7 +85,7 @@ const JobList = ({ jobsdata }: JobListProps) => {
                     />
                     <div className="flex flex-col">
                       <h3 className="font-bold text-lg mb-1">
-                        {data.companyName}
+                        {companyName ? companyName : ""}
                       </h3>
                       <p className="text-secondaryColor">{data.location}</p>
                     </div>

@@ -14,6 +14,7 @@ const CreateJob = () => {
   const session = useSession();
   const [location, setLocation] = useState("");
   const [type, setType] = useState("");
+  const [experienceLevel, setExperienceLevel] = useState("");
   const [state, setState] = useState(1);
 
   useEffect(() => {
@@ -59,6 +60,10 @@ const CreateJob = () => {
 
   const handleTypeChange = (event: SelectChangeEvent) => {
     setType(event.target.value as string);
+  };
+
+  const handleExpereinceLevelChange = (event: SelectChangeEvent) => {
+    setExperienceLevel(event.target.value as string);
   };
 
   const changeState = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -136,6 +141,7 @@ const CreateJob = () => {
   };
 
   const types = ["Remote", "Part time", "Full time", "Freelance"];
+  const epxereinceLevel = ["Internship", "Entry", "Intermediate", "Senior"];
   return (
     <section id="mb" className="container mx-auto px-6 mt-8">
       <div className="flex justify-between flex-col md:gap-4 lg:flex-row">
@@ -374,6 +380,35 @@ const CreateJob = () => {
                 </FormControl>
               </Box>
             </div>
+
+            <div className="mt-4">
+              <label
+                htmlFor="Type"
+                className="block mb-4 text-base font-bold text-gray-900 dark:text-white"
+              >
+                Expereince Level
+              </label>
+              <Box sx={{ minWidth: 120 }}>
+                <FormControl fullWidth>
+                  <InputLabel id="demo-simple-select-label">
+                    Expereince
+                  </InputLabel>
+                  <Select
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    value={experienceLevel}
+                    label="Experience Level "
+                    onChange={handleExpereinceLevelChange}
+                  >
+                    {epxereinceLevel.map((exp, i) => (
+                      <MenuItem value={exp} key={i}>
+                        {exp}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+              </Box>
+            </div>
             <div className="flex flex-col w-full mt-4">
               <label
                 htmlFor="Salary"
@@ -456,6 +491,7 @@ const CreateJob = () => {
             location={location}
             type={type}
             creating={true}
+            experienceLevel={experienceLevel}
             id={session.data?.user._id}
           />
         )}

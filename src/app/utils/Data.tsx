@@ -107,15 +107,15 @@ export const experience = [
   },
   {
     id: 2,
-    content: "Entry Level",
+    content: "Entry",
   },
   {
     id: 3,
-    content: "Mid-Senior Level",
+    content: "Intermediate",
   },
   {
     id: 4,
-    content: "Executive",
+    content: "Senior",
   },
 ];
 
