@@ -6,8 +6,36 @@ import { AiFillCheckCircle, AiOutlineSearch } from "react-icons/ai";
 import { HiOutlineLocationMarker } from "react-icons/hi";
 import header from "@/images/header.png";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 const Header = () => {
+  const [jobTitle, setJobTitle] = useState("");
+  const [location, setLocation] = useState("");
+  const router = useRouter();
+
+  const availableLocations = [
+    "Zenica",
+    "Sarajevo",
+    "Mostar",
+    "Banja Luka",
+    "Tuzla",
+    "Bihac",
+    "Bijeljina",
+  ];
+
+  const handleSearch = () => {
+    if (location === "" && jobTitle === "") {
+      router.push("/jobs");
+    } else if (location.length > 4 || jobTitle.length > 4) {
+      if (!availableLocations.includes(location)) {
+        console.log("Invalid location");
+      } else {
+        router.push(`/jobs?loc=${location}&jobTit=${jobTitle}`);
+      }
+    }
+  };
+
   return (
     <section id="mb" className="container mx-auto px-6 mt-8 lg:mt-1">
       <div className="grid grid-cols-1 lg:grid-cols-2">
@@ -40,6 +68,7 @@ const Header = () => {
                 type="text"
                 placeholder="Job Title"
                 className="pr-0 pl-12 py-4 rounded-md w-11/12 focus:border-[#438dfc]"
+                onChange={(e) => setJobTitle(e.target.value)}
               />
             </div>
             <div className="flex relative">
@@ -50,10 +79,14 @@ const Header = () => {
                 type="text"
                 placeholder="Location"
                 className="pr-0 pl-12 py-4 rounded-md focus:border-[#438dfc] w-11/12"
+                onChange={(e) => setLocation(e.target.value)}
               />
             </div>
             <div className="button-container">
-              <button className="bg-[#438dfc] rounded-md text-white border border-solid border-gray-300 hover:text-[#438dfc] hover:bg-white duration-200 font-medium flex p-[0.8rem] items-center gap-2 lg:p-4">
+              <button
+                onClick={handleSearch}
+                className="bg-[#438dfc] rounded-md text-white border border-solid border-gray-300 hover:text-[#438dfc] hover:bg-white duration-200 font-medium flex p-[0.8rem] items-center gap-2 lg:p-4"
+              >
                 Search{" "}
                 <span className="text-2xl">
                   <IoMdArrowDropright />

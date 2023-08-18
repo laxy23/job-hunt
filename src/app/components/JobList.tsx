@@ -1,9 +1,12 @@
 "use client";
 
-import { jobs } from "../utils/Data";
 import { BiSearchAlt } from "react-icons/bi";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import React from "react";
+import { useGlobalContext } from "./utils/Context/store";
+import Pagination from "@mui/material/Pagination";
+import { useSearchParams } from "next/navigation";
+import Link from "next/link";
 
 interface Job {
   _id: string;
@@ -23,25 +26,59 @@ interface Job {
 }
 
 interface JobListProps {
-  jobsdata: Job[] | undefined;
+  jobsdata?: Job[] | undefined;
   companyName: string | undefined;
 }
 
-const JobList = ({ jobsdata, companyName }: JobListProps) => {
+const JobList = ({ companyName }: JobListProps) => {
   const [searchValue, setSearchValue] = useState("");
+  const searchParams = useSearchParams();
+  const loc = searchParams.get("loc");
+  const jobTit = searchParams.get("jobTit");
+  const {
+    jobData,
+    setJobData,
+    currentPage,
+    totalPages,
+    setCurrentPage,
+    getAllJobs,
+  } = useGlobalContext();
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchValue(e.target.value);
   };
 
   const handleSearchSubmit = async () => {
-    const url = `http://localhost:3000/api/job/?price=${price}&location=${location}&avability=${avability}&experience=${experienceFilter}`;
+    const url = `http://localhost:3000/api/job/?search=${searchValue}`;
+    const res = await fetch(url);
+    const data = await res.json();
+    setJobData(data.jobs);
+  };
+
+  const handleParamsSubmit = async () => {
+    const url = `http://localhost:3000/api/job/?location=${loc}&jobTitle=${jobTit}`;
 
     const res = await fetch(url);
 
     const data = await res.json();
 
     setJobData(data.jobs);
+  };
+
+  useEffect(() => {
+    if (loc || jobTit) {
+      console.log(loc, jobTit);
+      handleParamsSubmit();
+    } else {
+      getAllJobs();
+    }
+  }, [currentPage]);
+
+  const handlePageChange = (
+    event: React.ChangeEvent<unknown>,
+    newPage: number
+  ) => {
+    setCurrentPage(newPage);
   };
 
   return (
@@ -67,47 +104,60 @@ const JobList = ({ jobsdata, companyName }: JobListProps) => {
           </div>
         </div>
         <div className="flex flex-col gap-8 mt-8">
-          {jobsdata &&
-            jobsdata.map((data) => (
+          {jobData &&
+            jobData.map((data) => (
               <div
                 key={data._id}
                 className="flex flex-col border border-solid border-gray-400 p-[22px] rounded-xl cursor-pointer"
               >
-                <div className="flex justify-between flex-col gap-6 md:flex-row md:gap-0">
-                  <div className="flex gap-4">
-                    <img
-                      src={data.logo}
-                      alt="logo"
-                      style={{
-                        width: "110px",
-                        height: "110px",
-                      }}
-                    />
-                    <div className="flex flex-col">
-                      <h3 className="font-bold text-lg mb-1">
-                        {companyName ? companyName : ""}
-                      </h3>
-                      <p className="text-secondaryColor">{data.location}</p>
+                <Link href={`/details/${data._id}`}>
+                  <div className="flex justify-between flex-col gap-6 md:flex-row md:gap-0">
+                    <div className="flex gap-4">
+                      <img
+                        src={data.logo}
+                        alt="logo"
+                        style={{
+                          width: "110px",
+                          height: "110px",
+                        }}
+                      />
+                      <div className="flex flex-col">
+                        <h3 className="font-bold text-lg mb-1">
+                          {companyName ? companyName : ""}
+                        </h3>
+                        <p className="text-secondaryColor">{data.location}</p>
+                      </div>
+                    </div>
+                    <div>
+                      <h3 className="font-bold">$ {data.salary}</h3>
                     </div>
                   </div>
-                  <div>
-                    <h3 className="font-bold">{data.salary}</h3>
-                  </div>
-                </div>
-                <h3 className="font-bold my-6 text-[18px]">{data.jobTitle}</h3>
-                <ul className="flex flex-wrap gap-2 mb-4">
-                  {data.skills.map((data, i) => (
-                    <li
-                      key={i}
-                      className="text-gray-700 border border-blue-500 bg-white text-sm font-bold px-4 rounded-full py-2"
-                    >
-                      {data}
-                    </li>
-                  ))}
-                </ul>
-                <p className="text-secondaryColor">{data.description}</p>
+                  <h3 className="font-bold my-6 text-[18px]">
+                    {data.jobTitle}
+                  </h3>
+                  <ul className="flex flex-wrap gap-2 mb-4">
+                    {data.skills.map((data, i) => (
+                      <li
+                        key={i}
+                        className="text-gray-700 border border-blue-500 bg-white text-sm font-bold px-4 rounded-full py-2"
+                      >
+                        {data}
+                      </li>
+                    ))}
+                  </ul>
+                  <p className="text-secondaryColor">{data.description}</p>
+                </Link>
               </div>
             ))}
+        </div>
+        <div className="flex justify-center mt-4">
+          <Pagination
+            onChange={handlePageChange}
+            count={totalPages as number}
+            page={currentPage}
+            variant="outlined"
+            color="primary"
+          />
         </div>
       </div>
     </section>

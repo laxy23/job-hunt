@@ -10,6 +10,7 @@ import FormControl from "@mui/material/FormControl";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import { experience } from "../utils/Data";
 import React from "react";
+import { useGlobalContext } from "./utils/Context/store";
 
 const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
@@ -19,11 +20,14 @@ const Filter = () => {
   const [avability, setAvability] = useState<string[]>([]);
   const [experienceFilter, setExperienceFilter] = useState<string[]>([]);
 
+  const { getAllJobs, setJobData } = useGlobalContext();
+
   const handleClear = () => {
     setLocation("");
     setPrice(2500);
     setAvability([]);
     setExperienceFilter([]);
+    getAllJobs();
   };
 
   const handleChange = (event: SelectChangeEvent) => {
@@ -71,10 +75,20 @@ const Filter = () => {
     }
   };
 
+  const handleFilterSubmit = async () => {
+    const url = `http://localhost:3000/api/job/?price=${price}&location=${location}&avability=${avability}&experience=${experienceFilter}`;
+
+    const res = await fetch(url);
+
+    const data = await res.json();
+
+    setJobData(data.jobs);
+  };
+
   return (
     <section
       id="filter"
-      className="container mx-auto px-0 lg:px-12 border-solid border border-gray-300 py-4 rounded-lg hidden lg:block"
+      className="container mx-auto px-0 lg:px-12 border-solid border border-gray-300 py-4 rounded-lg hidden mt-4 pb-10 lg:block"
     >
       <div className="flex justify-between">
         <h3 className="text-xl font-bold">Filter</h3>
@@ -172,7 +186,10 @@ const Filter = () => {
         </ul>
       </div>
       <div className="mt-4 pb-4">
-        <button className="bg-[#438dfc] py-2 px-6 rounded-md text-white border border-solid border-gray-300 hover:text-[#438dfc] hover:bg-white duration-200 font-medium">
+        <button
+          onClick={handleFilterSubmit}
+          className="bg-[#438dfc] py-2 px-6 rounded-md text-white border border-solid border-gray-300 hover:text-[#438dfc] hover:bg-white duration-200 font-medium"
+        >
           Apply Changes
         </button>
       </div>

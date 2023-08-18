@@ -1,8 +1,12 @@
+"use client";
+
 import Link from "next/link";
 import footer from "@/images/footer.png";
 import Image from "next/image";
+import { useSession } from "next-auth/react";
 
 const Footer = () => {
+  const session = useSession();
   return (
     <>
       <section id="mb" className="mt-8 lg:mt-1 bg-primaryColor p-9">
@@ -12,12 +16,21 @@ const Footer = () => {
               Apply for your dream job and unleash your full potential in a
               thriving and rewarding career.
             </h3>
-            <Link
-              href="/"
-              className="bg-[#438dfc] py-2 px-8 rounded-md text-white border border-solid border-gray-300 hover:text-[#438dfc] hover:bg-white duration-200 font-medium"
-            >
-              Sign Up
-            </Link>
+            {session.status === "authenticated" ? (
+              <Link
+                href="/jobs"
+                className="bg-[#438dfc] py-2 px-8 rounded-md text-white border border-solid border-gray-300 hover:text-[#438dfc] hover:bg-white duration-200 font-medium"
+              >
+                Discover
+              </Link>
+            ) : (
+              <Link
+                href="/sign-up"
+                className="bg-[#438dfc] py-2 px-8 rounded-md text-white border border-solid border-gray-300 hover:text-[#438dfc] hover:bg-white duration-200 font-medium"
+              >
+                Sign Up
+              </Link>
+            )}
           </div>
           <div>
             <Image

@@ -79,3 +79,20 @@ export const POST = async (
     console.log(error);
   }
 };
+
+export const GET = async (
+  req: NextRequest,
+  route: { params: { id: string } }
+) => {
+  try {
+    await connect();
+
+    const id = route.params.id;
+
+    const job = await Job.findById(id);
+
+    return NextResponse.json({ job }, { status: 200 });
+  } catch (error) {
+    console.log(error);
+  }
+};

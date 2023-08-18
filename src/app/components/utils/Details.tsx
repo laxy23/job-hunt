@@ -3,6 +3,7 @@ import { VscTypeHierarchySuper } from "react-icons/vsc";
 import { BiSolidBadgeCheck } from "react-icons/bi";
 import { HiOutlineLocationMarker } from "react-icons/hi";
 import { SiLevelsdotfyi } from "react-icons/si";
+import { useEffect, useState } from "react";
 
 interface JobDetail {
   id?: number;
@@ -15,10 +16,11 @@ interface JobDetail {
   type?: string;
   experience: string[];
   skills: string[];
+  experienceLevel: string;
 }
 
 interface DetailsProps {
-  detail: JobDetail;
+  detail?: JobDetail;
   location?: string;
   type?: string;
   creating?: boolean;
@@ -34,6 +36,8 @@ const Details: React.FC<DetailsProps> = ({
   id,
   experienceLevel,
 }) => {
+  const [jobData, setJobData] = useState<JobDetail>();
+
   const handleSubmit = async () => {
     console.log(detail);
     const res = await fetch(`http://localhost:3000/api/job/${id}`, {
@@ -52,12 +56,24 @@ const Details: React.FC<DetailsProps> = ({
     console.log(data);
   };
 
+  useEffect(() => {
+    const getJobById = async () => {
+      const res = await fetch(`/api/job/${id}`);
+
+      const data = await res.json();
+
+      setJobData(data.job);
+    };
+
+    getJobById();
+  }, [id]);
+
   return (
     <div>
       <div className="flex flex-col">
         <div className="flex gap-6 md:gap-8 mb-8">
           <img
-            src={detail.logo}
+            src={jobData?.logo}
             alt="company logo"
             style={{
               width: "110px",
@@ -65,14 +81,14 @@ const Details: React.FC<DetailsProps> = ({
             }}
           />
           <div className="flex flex-col">
-            <h3 className="text-xl font-bold mb-2">{detail.jobTitle}</h3>
+            <h3 className="text-xl font-bold mb-2">{jobData?.jobTitle}</h3>
             <ul className="flex text-gray-400 gap-10">
               <li className="flex justify-center items-center gap-2">
                 {" "}
                 <span className="text-primaryColor font-bold flex justify-center items-center text-[18px]">
                   <HiOutlineLocationMarker />
                 </span>{" "}
-                {detail.location ? detail.location : location}
+                {jobData?.location ? jobData?.location : location}
               </li>
               <li className="list-disc">2 Hours ago</li>
             </ul>
@@ -84,7 +100,7 @@ const Details: React.FC<DetailsProps> = ({
               <RiMoneyDollarBoxLine />
             </span>
             <div className="flex flex-col">
-              <h3 className="font-bold">{detail.salary} BAM</h3>
+              <h3 className="font-bold">{jobData?.salary} BAM</h3>
               <span className="text-secondaryColor">Avg. salary</span>
             </div>
           </div>
@@ -93,7 +109,9 @@ const Details: React.FC<DetailsProps> = ({
               <VscTypeHierarchySuper />
             </span>
             <div className="flex flex-col">
-              <h3 className="font-bold">{detail.type ? detail.type : type}</h3>
+              <h3 className="font-bold">
+                {jobData?.type ? jobData?.type : type}
+              </h3>
               <span className="text-secondaryColor">Job Type</span>
             </div>
           </div>
@@ -103,7 +121,7 @@ const Details: React.FC<DetailsProps> = ({
             </span>
             <div className="flex flex-col">
               <h3 className="font-bold">
-                {experienceLevel ? experienceLevel : ""}
+                {jobData?.experienceLevel ? jobData?.experienceLevel : ""}
               </h3>
               <span className="text-secondaryColor">Expereince Level</span>
             </div>
@@ -111,11 +129,11 @@ const Details: React.FC<DetailsProps> = ({
         </div>
         <hr />
         <h3 className="font-bold mt-8 text-xl">About the job :</h3>
-        <p className="text-secondaryColor mt-2">{detail.description}</p>
+        <p className="text-secondaryColor mt-2">{jobData?.description}</p>
         <h3 className="font-bold mt-4 text-xl">Required Expereince :</h3>
         <ul>
           {creating
-            ? detail.experience[0]
+            ? detail?.experience[0]
                 .split(", ")
                 .map((experience) => experience.trim())
                 .map((data, i) => (
@@ -129,7 +147,7 @@ const Details: React.FC<DetailsProps> = ({
                     {data}
                   </li>
                 ))
-            : detail.experience.map((data, i) => (
+            : detail?.experience.map((data, i) => (
                 <li
                   className="flex gap-4 items-center text-secondaryColor mt-2"
                   key={i}
@@ -144,7 +162,7 @@ const Details: React.FC<DetailsProps> = ({
         <h3 className="font-bold mt-4 text-xl mb-4">Skills and Expertise : </h3>
         <ul className="flex flex-wrap gap-2 mb-4">
           {creating
-            ? detail.skills[0]
+            ? detail?.skills[0]
                 .split(", ")
                 .map((skill) => skill.trim())
                 .map((data, i) => (
@@ -155,7 +173,7 @@ const Details: React.FC<DetailsProps> = ({
                     {data}
                   </li>
                 ))
-            : detail.skills.map((data, i) => (
+            : detail?.skills.map((data, i) => (
                 <li
                   key={i}
                   className="text-gray-700 border border-blue-500 bg-white text-sm font-bold px-4 rounded-full py-2"

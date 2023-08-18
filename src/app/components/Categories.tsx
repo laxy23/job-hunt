@@ -1,7 +1,11 @@
+"use client";
+
 import { categories } from "../utils/Data";
 import PageTitle from "../utils/PageTitle";
+import { useRouter } from "next/navigation";
 
 const Categories = () => {
+  const router = useRouter();
   return (
     <section id="mb" className="container mx-auto px-6 mt-8 lg:mt-1">
       <PageTitle
@@ -21,7 +25,10 @@ const Categories = () => {
             <h2 className="text-lg font-bold mb-4">{data.title}</h2>
             <p className="text-gray-700 mb-4">{data.desc}</p>
             <div>
-              <button className="border border-primaryColor border-solid px-8 py-2 hover:text-white hover:bg-primaryColor duration-200 hover:border-white">
+              <button
+                onClick={() => router.push("/jobs")}
+                className="border border-primaryColor border-solid px-8 py-2 hover:text-white hover:bg-primaryColor duration-200 hover:border-white"
+              >
                 Browse Job
               </button>
             </div>
