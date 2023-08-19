@@ -63,7 +63,7 @@ body {
   text-align: center;
   transition: color 0.2s ease-in-out;
 }
-input[type="checkbox"] {
+#filter input[type="checkbox"] {
   height: 2.5rem !important;
   width: 2.5rem !important;
 }
@@ -84,4 +84,10 @@ input[type="file"]::file-selector-button:hover {
   width: 30px;
   height: 2px;
   background-color: #bdbdbd;
+}
+@media (min-width: 320px) and (max-width: 550px) {
+  #jobCard img {
+    width: 60px !important;
+    height: 60px !important;
+  }
 }

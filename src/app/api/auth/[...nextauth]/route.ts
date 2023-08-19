@@ -53,6 +53,7 @@ const handler = NextAuth({
       if (user) token.role = user.role;
       if (user) token.photo = user.photo;
       if (user) token._id = user._id;
+      if (user) token.aboutCompany = user.aboutCompany;
 
       if (trigger === "update") {
         return { ...token, ...session.user };
@@ -63,6 +64,7 @@ const handler = NextAuth({
       if (session?.user) session.user.role = token.role;
       if (session?.user) session.user.photo = token.photo;
       if (session?.user) session.user._id = token._id;
+      if (session?.user) session.user.aboutCompany = token.aboutCompany;
       return session;
     },
   },

@@ -52,6 +52,7 @@ export const POST = async (
       salary,
       experience,
       skills,
+      mail,
     } = data.detail;
 
     const { type, location, experienceLevel } = data;
@@ -67,6 +68,7 @@ export const POST = async (
       type,
       experience,
       skills,
+      mail,
       user: id,
     };
 

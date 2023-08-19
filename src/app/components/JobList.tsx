@@ -136,14 +136,17 @@ const JobList = ({ companyName }: JobListProps) => {
                     {data.jobTitle}
                   </h3>
                   <ul className="flex flex-wrap gap-2 mb-4">
-                    {data.skills.map((data, i) => (
-                      <li
-                        key={i}
-                        className="text-gray-700 border border-blue-500 bg-white text-sm font-bold px-4 rounded-full py-2"
-                      >
-                        {data}
-                      </li>
-                    ))}
+                    {data?.skills[0]
+                      .split(", ")
+                      .map((skill) => skill.trim())
+                      .map((data, i) => (
+                        <li
+                          key={i}
+                          className="text-gray-700 border border-blue-500 bg-white text-sm font-bold px-4 rounded-full py-2"
+                        >
+                          {data}
+                        </li>
+                      ))}
                   </ul>
                   <p className="text-secondaryColor">{data.description}</p>
                 </Link>

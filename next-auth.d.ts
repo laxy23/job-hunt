@@ -11,6 +11,7 @@ declare module "next-auth" {
       email: string;
       photo: string;
       _id: string;
+      aboutCompany: string;
     } & DefaultSession;
   }
 
@@ -18,6 +19,7 @@ declare module "next-auth" {
     role: string;
     photo: string;
     _id: string;
+    aboutCompany: string;
   }
 }
 
@@ -26,5 +28,6 @@ declare module "next-auth/jwt" {
     role: string;
     photo: string;
     _id: string;
+    aboutCompany: string;
   }
 }

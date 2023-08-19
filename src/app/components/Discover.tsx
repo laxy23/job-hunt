@@ -1,12 +1,7 @@
 "use client";
 
-import { discover } from "../utils/Data";
 import PageTitle from "../utils/PageTitle";
-import { MdLocationOn } from "react-icons/md";
-import Link from "next/link";
-import { BsArrowRight } from "react-icons/bs";
-import { Button } from "flowbite-react";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import JobCard from "./utils/JobCard";
 import { useSession } from "next-auth/react";
 import { useGlobalContext } from "./utils/Context/store";

@@ -14,13 +14,16 @@ const Profile = () => {
   const [firstName, setFirstName] = useState<string | undefined>("");
   const [role, setRole] = useState<string | undefined>("");
   const [email, setEmail] = useState<string | undefined>("");
+  const [aboutCompany, setaboutCompany] = useState<string | undefined>("");
   const [inputsFocused, setInputsFocused] = useState(false);
+  const [myJobs, setMyJobs] = useState<[] | undefined>();
 
   const handleCancel = () => {
     setInputsFocused(false);
     setFirstName(session?.data?.user.name);
     setRole(session?.data?.user.role);
     setEmail(session?.data?.user.email);
+    setaboutCompany(session.data?.user.aboutCompany);
   };
 
   const handleSubmit = async () => {
@@ -30,6 +33,9 @@ const Profile = () => {
       {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          aboutCompany,
+        }),
       }
     );
 
@@ -44,6 +50,7 @@ const Profile = () => {
           ...session.data?.user,
           email: data.user.email,
           name: data.user.name,
+          aboutCompany: data.user.aboutCompany,
         },
       });
       console.log(upd, "UPD");
@@ -57,8 +64,23 @@ const Profile = () => {
       setFirstName(session.data.user.name);
       setRole(session.data.user.role);
       setEmail(session.data.user.email);
+      setaboutCompany(session.data.user.aboutCompany);
     }
     console.log(session);
+
+    if (session.data?.user.role === "company") {
+      const fetchMyJobs = async () => {
+        const res = await fetch(`/api/job/profile/${session.data?.user._id}`);
+
+        const data = await res.json();
+
+        console.log(data.myJobs);
+
+        setMyJobs(data.myJobs);
+      };
+
+      fetchMyJobs();
+    }
   }, [session?.data?.user, session.update]);
 
   const handleUpdateUser = async (
@@ -192,6 +214,28 @@ const Profile = () => {
         </div>
       </div>
       <hr />
+      <div className="flex gap-8 mt-8 mb-6 justify-between flex-col md:flex-row">
+        <div className="flex flex-col">
+          <h3 className="font-bold text-xl">About the company</h3>
+          <p className="text-secondaryColor font-medium">
+            Write short description and tell emloyee who you are!
+          </p>
+        </div>
+        <div className="flex flex-col w-full md:w-1/2 gap-4">
+          <textarea
+            value={aboutCompany ? aboutCompany : ""}
+            name="aboutCompany"
+            onChange={(e) => setaboutCompany(e.target.value)}
+            id="aboutCompany"
+            cols={10}
+            rows={10}
+            className="border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            placeholder="Write something about yourself!"
+            onFocus={() => setInputsFocused(true)}
+          />
+        </div>
+      </div>
+      <hr />
       <div className="flex gap-8 mt-8 mb-6 justify-between flex-col lg:flex-row">
         <div className="flex flex-col">
           <h3 className="font-bold text-xl">Profile Photo</h3>
@@ -243,8 +287,8 @@ const Profile = () => {
         <div className="flex gap-8 mt-8 mb-6 flex-col">
           <h3 className="font-bold text-2xl">Your Jobs</h3>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            {discover.map((data) => (
-              <JobCard data={data} key={data.id} />
+            {myJobs?.map((data, i) => (
+              <JobCard data={data} deleteActive={true} key={i} />
             ))}
           </div>
         </div>

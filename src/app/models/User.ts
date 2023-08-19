@@ -21,6 +21,11 @@ const userSchema = new Schema(
       enum: ["employee", "company", "admin"],
       default: "employee",
     },
+    aboutCompany: {
+      type: String,
+      default:
+        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod dolorem corporis, velit quia laudantium, id ullam quas repellendus,consectetur quibusdam asperiores totam vel atque veniam.",
+    },
     photo: {
       type: String,
       default:

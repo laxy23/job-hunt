@@ -1,31 +1,51 @@
 import { MdLocationOn } from "react-icons/md";
-import { BsArrowRight } from "react-icons/bs";
+import { BsArrowRight, BsFillTrashFill } from "react-icons/bs";
 import Link from "next/link";
 
-interface JobItem {
-  id: number;
-  title: string;
+interface Job {
+  _id: string;
+  jobTitle: string;
   companyName: string;
-  desc: string;
-  icon: string;
+  logo: string;
+  description: string;
   location: string;
+  salary: number;
   type: string;
+  experience: string[];
+  skills: string[];
+  user: string;
+  createdAt: string;
+  updatedAt: string;
+  __v: number;
 }
 
-const JobCard = ({ data }: any) => {
+interface JobListProps {
+  data?: Job | undefined;
+  deleteActive?: boolean;
+}
+const JobCard = ({ data, deleteActive }: JobListProps) => {
+  const handleDelete = async () => {};
   return (
     <div
       className="flex flex-col mx-4 my-0 px-6 py-[17px] rounded-[25px] border border-solid border-secondaryColor relative hover:shadow-lg duration-300"
-      key={data._id}
+      key={data?._id}
+      id="jobCard"
     >
       <div className="absolute top-5 right-5 text-xl lg:top-4 lg:right-6 lg:text-2xl text-primaryColor">
-        <Link href="/">
+        <Link href={`/details/${data?._id}`}>
           <BsArrowRight />
         </Link>
       </div>
-      <div className="flex gap-6 mb-6">
+      {deleteActive && (
+        <div className="text-red-500 absolute top-5 right-16 text-xl lg:top-4 lg:right-16 lg:text-2xl">
+          <button onClick={handleDelete}>
+            <BsFillTrashFill />
+          </button>
+        </div>
+      )}
+      <div className="flex mb-6 flex-col md:flex-row md:gap-6">
         <img
-          src={data.logo}
+          src={data?.logo}
           alt="icon"
           style={{
             width: "110px",
@@ -33,12 +53,12 @@ const JobCard = ({ data }: any) => {
           }}
         />
         <div>
-          <h2 className="font-bold text-lg">{data.jobTitle}</h2>
-          <h4 className="text-primaryColor">{data.companyName}</h4>
+          <h2 className="font-bold text-lg">{data?.jobTitle}</h2>
+          <h4 className="text-primaryColor">{data?.companyName}</h4>
         </div>
       </div>
       <p className="text-secondaryColor pb-4 border-b-[#ccc] border-b border-solid">
-        {data.description}
+        {data?.description}
       </p>
       <br />
       <ul className="flex gap-12">
@@ -46,9 +66,9 @@ const JobCard = ({ data }: any) => {
           <span>
             <MdLocationOn />
           </span>
-          {data.location}
+          {data?.location}
         </li>
-        <li className="list-disc font-bold">{data.type}</li>
+        <li className="list-disc font-bold">{data?.type}</li>
       </ul>
     </div>
   );

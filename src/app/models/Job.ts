@@ -27,6 +27,10 @@ const jobSchema = new Schema(
       type: Number,
       require: [true, "Job must have a salary"],
     },
+    mail: {
+      type: String,
+      require: [true, "Company must have a mail"],
+    },
     experienceLevel: {
       type: String,
       enum: ["Internship", "Entry", "Intermediate", "Senior"],
