@@ -59,7 +59,6 @@ export const GlobalContextProvider = ({ children }: any) => {
     const data = await res.json();
 
     setJobData(data.jobs);
-    console.log(data);
     setTotalPages(data.totalPages);
   };
 

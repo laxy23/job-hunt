@@ -83,8 +83,6 @@ export const GET = async (req: NextRequest) => {
         filter.jobTitle = { $regex: jobTitle, $options: "i" };
       }
 
-      console.log(filter);
-
       const totalJobs = await Job.countDocuments();
       const jobs = await Job.find(filter).skip(skip).limit(PAGE_SIZE);
 

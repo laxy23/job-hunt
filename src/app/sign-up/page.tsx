@@ -4,11 +4,6 @@ import { useState } from "react";
 import sign from "@/images/signUp.png";
 import Image from "next/image";
 import Link from "next/link";
-import Box from "@mui/material/Box";
-import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
-import Select, { SelectChangeEvent } from "@mui/material/Select";
 import { Button } from "flowbite-react";
 
 const SignUpPage = () => {
@@ -50,7 +45,7 @@ const SignUpPage = () => {
 
     if (state === "employee") {
       try {
-        const res = await fetch("http://localhost:3000/api/auth/register", {
+        const res = await fetch("/api/auth/register", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -63,15 +58,13 @@ const SignUpPage = () => {
           }),
         });
 
-        const result = await res.json();
-
-        console.log(result);
+        await res.json();
       } catch (error) {
         console.log(error);
       }
     } else if (state === "company") {
       try {
-        const res = await fetch("http://localhost:3000/api/auth/register", {
+        const res = await fetch("/api/auth/register", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -84,9 +77,7 @@ const SignUpPage = () => {
           }),
         });
 
-        const result = await res.json();
-
-        console.log(result);
+        await res.json();
       } catch (error) {
         console.log(error);
       }

@@ -9,7 +9,6 @@ import { useRouter } from "next/navigation";
 import { Dropdown, Avatar } from "flowbite-react";
 
 const NavbarMenu = () => {
-  const register = false;
   const router = useRouter();
 
   const session = useSession();
@@ -42,7 +41,7 @@ const NavbarMenu = () => {
               label={
                 <Avatar
                   alt="User settings"
-                  img="https://flowbite.com/docs/images/people/profile-picture-5.jpg"
+                  img={session.data?.user.photo}
                   rounded
                 />
               }

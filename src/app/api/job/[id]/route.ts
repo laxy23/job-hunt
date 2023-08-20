@@ -10,13 +10,9 @@ export const PUT = async (
   try {
     await connect();
     const url = new URL(req.url);
-    console.log(url);
     const id = route.params.id;
 
-    console.log(id);
     const fileName = url.searchParams.get("fileName");
-
-    console.log(fileName);
 
     const user = await User.findByIdAndUpdate(
       id,
@@ -39,8 +35,6 @@ export const POST = async (
   try {
     await connect();
     const data = await req.json();
-
-    console.log(data);
 
     const id = route.params.id;
 
@@ -72,8 +66,6 @@ export const POST = async (
       user: id,
     };
 
-    console.log(newJob);
-
     const job = await Job.create(newJob);
 
     return NextResponse.json({ job }, { status: 201 });
@@ -93,7 +85,9 @@ export const GET = async (
 
     const job = await Job.findById(id);
 
-    return NextResponse.json({ job }, { status: 200 });
+    const user = await User.findById(job.user);
+
+    return NextResponse.json({ job, user }, { status: 200 });
   } catch (error) {
     console.log(error);
   }

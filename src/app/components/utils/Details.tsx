@@ -24,6 +24,28 @@ interface JobDetail {
   createdAt?: Date;
 }
 
+type Id = {
+  $oid: string;
+};
+
+type Timestamp = {
+  $date: string;
+};
+
+type UserDataType = {
+  _id: Id;
+  name: string;
+  email: string;
+  password: string;
+  role: string;
+  companyPhoto: string;
+  myJobs: any[]; // You can replace 'any' with a specific type if needed
+  createdAt: Timestamp;
+  updatedAt: Timestamp;
+  aboutCompany: string;
+  __v: number;
+};
+
 interface DetailsProps {
   detail?: JobDetail;
   location?: string;
@@ -35,6 +57,7 @@ interface DetailsProps {
   experienceLevel?: string | undefined;
   mail?: string;
   createdAt?: Date;
+  userData?: UserDataType;
 }
 const Details: React.FC<DetailsProps> = ({
   detail,
@@ -43,12 +66,13 @@ const Details: React.FC<DetailsProps> = ({
   creating,
   id,
   experienceLevel,
+  userData,
 }) => {
   const [timeSinceCreation, setTimeSinceCreation] = useState("");
   const session = useSession();
   const handleSubmit = async () => {
     console.log(detail);
-    const res = await fetch(`http://localhost:3000/api/job/${id}`, {
+    const res = await fetch(`/api/job/${id}`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -60,8 +84,6 @@ const Details: React.FC<DetailsProps> = ({
     });
 
     const data = await res.json();
-
-    console.log(data);
   };
 
   function timeAgo(createdDate: Date) {
@@ -187,11 +209,7 @@ const Details: React.FC<DetailsProps> = ({
             ))}
         </ul>
         <h3 className="font-bold mt-4 text-xl">About the client : </h3>
-        <p className="text-secondaryColor mb-6">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod dolorem
-          corporis, velit quia laudantium, id ullam quas repellendus,
-          consectetur quibusdam asperiores totam vel atque veniam.
-        </p>
+        <p className="text-secondaryColor mb-6">{userData?.aboutCompany}</p>
 
         {creating ? (
           <button

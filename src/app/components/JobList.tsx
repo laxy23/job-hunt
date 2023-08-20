@@ -49,14 +49,14 @@ const JobList = ({ companyName }: JobListProps) => {
   };
 
   const handleSearchSubmit = async () => {
-    const url = `http://localhost:3000/api/job/?search=${searchValue}`;
+    const url = `/api/job/?search=${searchValue}`;
     const res = await fetch(url);
     const data = await res.json();
     setJobData(data.jobs);
   };
 
   const handleParamsSubmit = async () => {
-    const url = `http://localhost:3000/api/job/?location=${loc}&jobTitle=${jobTit}`;
+    const url = `/api/job/?location=${loc}&jobTitle=${jobTit}`;
 
     const res = await fetch(url);
 
@@ -67,7 +67,6 @@ const JobList = ({ companyName }: JobListProps) => {
 
   useEffect(() => {
     if (loc || jobTit) {
-      console.log(loc, jobTit);
       handleParamsSubmit();
     } else {
       getAllJobs();

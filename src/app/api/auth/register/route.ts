@@ -7,8 +7,6 @@ export const POST = async (req: Request) => {
   try {
     const data = await req.json();
 
-    console.log(data);
-
     await connect();
 
     const {

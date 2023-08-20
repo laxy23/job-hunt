@@ -24,7 +24,17 @@ interface JobListProps {
   deleteActive?: boolean;
 }
 const JobCard = ({ data, deleteActive }: JobListProps) => {
-  const handleDelete = async () => {};
+  const handleDelete = async (id: string) => {
+    if (window.confirm("Are you sure you want to delete this job?")) {
+      const res = await fetch(`/api/job/profile/${id}`, {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+      });
+
+      await res.json();
+      window.location.reload();
+    }
+  };
   return (
     <div
       className="flex flex-col mx-4 my-0 px-6 py-[17px] rounded-[25px] border border-solid border-secondaryColor relative hover:shadow-lg duration-300"
@@ -38,7 +48,7 @@ const JobCard = ({ data, deleteActive }: JobListProps) => {
       </div>
       {deleteActive && (
         <div className="text-red-500 absolute top-5 right-16 text-xl lg:top-4 lg:right-16 lg:text-2xl">
-          <button onClick={handleDelete}>
+          <button onClick={() => handleDelete(data?._id as string)}>
             <BsFillTrashFill />
           </button>
         </div>

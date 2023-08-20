@@ -76,7 +76,7 @@ const Filter = () => {
   };
 
   const handleFilterSubmit = async () => {
-    const url = `http://localhost:3000/api/job/?price=${price}&location=${location}&avability=${avability}&experience=${experienceFilter}`;
+    const url = `/api/job/?price=${price}&location=${location}&avability=${avability}&experience=${experienceFilter}`;
 
     const res = await fetch(url);
 

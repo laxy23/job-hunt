@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import JobCard from "../components/utils/JobCard";
-import { discover } from "../utils/Data";
 import Link from "next/link";
 import { useSession } from "next-auth/react";
 import "@uploadthing/react/styles.css";
@@ -27,9 +26,8 @@ const Profile = () => {
   };
 
   const handleSubmit = async () => {
-    console.log(firstName, email);
     const res = await fetch(
-      `http://localhost:3000/api/job/profile/${session.data?.user._id}?name=${firstName}&email=${email}`,
+      `/api/job/profile/${session.data?.user._id}?name=${firstName}&email=${email}`,
       {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
@@ -41,10 +39,8 @@ const Profile = () => {
 
     const data = await res.json();
 
-    console.log(data, "Data");
-
     if (data) {
-      const upd = await session.update({
+      await session.update({
         ...session.data,
         user: {
           ...session.data?.user,
@@ -53,7 +49,6 @@ const Profile = () => {
           aboutCompany: data.user.aboutCompany,
         },
       });
-      console.log(upd, "UPD");
     }
 
     window.location.reload();
@@ -66,15 +61,12 @@ const Profile = () => {
       setEmail(session.data.user.email);
       setaboutCompany(session.data.user.aboutCompany);
     }
-    console.log(session);
 
     if (session.data?.user.role === "company") {
       const fetchMyJobs = async () => {
         const res = await fetch(`/api/job/profile/${session.data?.user._id}`);
 
         const data = await res.json();
-
-        console.log(data.myJobs);
 
         setMyJobs(data.myJobs);
       };
@@ -86,11 +78,10 @@ const Profile = () => {
   const handleUpdateUser = async (
     response: UploadFileResponse[] | undefined
   ) => {
-    console.log("Response", response);
     const res = await fetch(
-      `http://localhost:3000/api/job/${
-        session.data?.user._id
-      }?fileName=https://utfs.io/f/${response ? response[0].key : ""}`,
+      `/api/job/${session.data?.user._id}?fileName=https://utfs.io/f/${
+        response ? response[0].key : ""
+      }`,
       {
         method: "PUT",
         headers: { "Content-Type": "application/json" },

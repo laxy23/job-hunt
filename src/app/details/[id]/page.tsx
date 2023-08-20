@@ -1,6 +1,5 @@
 "use client";
 
-import { detail } from "@/app/utils/Data";
 import Details from "@/app/components/utils/Details";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -8,8 +7,8 @@ import { useEffect, useState } from "react";
 const JobDetail = () => {
   const params = useParams();
   const [jobData, setJobData] = useState();
+  const [userData, setUserData] = useState();
 
-  console.log(params.id);
   const id = params.id;
 
   useEffect(() => {
@@ -19,6 +18,7 @@ const JobDetail = () => {
       const data = await res.json();
 
       setJobData(data.job);
+      setUserData(data.user);
     };
 
     getJobById();
@@ -26,7 +26,7 @@ const JobDetail = () => {
 
   return (
     <section id="mb" className="container mx-auto px-6 mt-8">
-      <Details detail={jobData} id={params.id as string} />
+      <Details detail={jobData} userData={userData} id={params.id as string} />
     </section>
   );
 };

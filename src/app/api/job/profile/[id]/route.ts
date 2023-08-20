@@ -11,16 +11,12 @@ export const PUT = async (
     await connect();
     const url = new URL(req.url);
     const data = await req.json();
-    console.log(url);
     const id = route.params.id;
 
     const { aboutCompany } = data;
 
-    console.log(id);
     const name = url.searchParams.get("name");
     const email = url.searchParams.get("email");
-
-    console.log(name, email);
 
     const user = await User.findByIdAndUpdate(
       id,
@@ -47,8 +43,6 @@ export const GET = async (
 
     const id = route.params.id;
 
-    console.log(id);
-
     const myJobs = await Job.find({ user: id });
 
     return NextResponse.json({ myJobs }, { status: 200 });
@@ -65,8 +59,6 @@ export const DELETE = async (
     await connect();
 
     const id = route.params.id;
-
-    console.log(id);
 
     await Job.findByIdAndDelete(id);
 

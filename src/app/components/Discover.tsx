@@ -3,12 +3,9 @@
 import PageTitle from "../utils/PageTitle";
 import { useEffect } from "react";
 import JobCard from "./utils/JobCard";
-import { useSession } from "next-auth/react";
 import { useGlobalContext } from "./utils/Context/store";
 
 const Discover = () => {
-  const session = useSession();
-
   const { setJobData, jobData } = useGlobalContext();
 
   useEffect(() => {
