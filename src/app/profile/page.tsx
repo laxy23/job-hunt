@@ -278,6 +278,7 @@ const Profile = () => {
         <div className="flex gap-8 mt-8 mb-6 flex-col">
           <h3 className="font-bold text-2xl">Your Jobs</h3>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            {myJobs?.length === 0 && <h3>You haven't posted a job yet...</h3>}
             {myJobs?.map((data, i) => (
               <JobCard data={data} deleteActive={true} key={i} />
             ))}

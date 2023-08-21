@@ -23,6 +23,7 @@ const CreateJob = () => {
         ...prevState,
         logo: session.data.user.photo,
         mail: session.data.user.email,
+        companyName: session.data.user.name,
       }));
     }
   }, [session]);
@@ -30,6 +31,7 @@ const CreateJob = () => {
   const [form, setForm] = useState({
     logo: "",
     jobTitle: "",
+    companyName: "",
     description: "",
     date: "",
     duration: 0,

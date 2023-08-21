@@ -7,6 +7,7 @@ import { useGlobalContext } from "./utils/Context/store";
 import Pagination from "@mui/material/Pagination";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
+import Spinner from "./utils/Spinner";
 
 interface Job {
   _id: string;
@@ -42,6 +43,7 @@ const JobList = ({ companyName }: JobListProps) => {
     totalPages,
     setCurrentPage,
     getAllJobs,
+    loading,
   } = useGlobalContext();
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -80,6 +82,10 @@ const JobList = ({ companyName }: JobListProps) => {
     setCurrentPage(newPage);
   };
 
+  if (loading) {
+    return <Spinner />;
+  }
+
   return (
     <section id="mb" className="container mx-auto px-0 lg:px-12 py-4">
       <div className="flex flex-col">
@@ -116,8 +122,8 @@ const JobList = ({ companyName }: JobListProps) => {
                         src={data.logo}
                         alt="logo"
                         style={{
-                          width: "110px",
-                          height: "110px",
+                          width: "80px",
+                          height: "80px",
                         }}
                       />
                       <div className="flex flex-col">

@@ -14,7 +14,6 @@ export const POST = async (req: Request) => {
       companyEmail,
       companyPassword,
       name,
-      email,
       role,
       password,
       companyRole,
@@ -27,15 +26,20 @@ export const POST = async (req: Request) => {
 
     const newUser = {
       name: companyName ? companyName : name,
-      email: companyEmail ? companyEmail : email,
+      email: companyEmail ? companyEmail : data.email,
       role: role ? role : companyRole,
       password: hashedPassword,
     };
 
+    const { email } = newUser;
+
     const userExist = await User.findOne({ email });
 
     if (userExist) {
-      return new Error("User already exists!");
+      return NextResponse.json(
+        { message: "User already exists!" },
+        { status: 500 }
+      );
     }
 
     const user = await User.create(newUser);

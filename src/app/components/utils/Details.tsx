@@ -6,6 +6,7 @@ import { SiLevelsdotfyi } from "react-icons/si";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 interface JobDetail {
   id?: number;
@@ -70,8 +71,8 @@ const Details: React.FC<DetailsProps> = ({
 }) => {
   const [timeSinceCreation, setTimeSinceCreation] = useState("");
   const session = useSession();
+  const router = useRouter();
   const handleSubmit = async () => {
-    console.log(detail);
     const res = await fetch(`/api/job/${id}`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -84,6 +85,10 @@ const Details: React.FC<DetailsProps> = ({
     });
 
     const data = await res.json();
+
+    if (data) {
+      router.push("/");
+    }
   };
 
   function timeAgo(createdDate: Date) {
@@ -168,7 +173,9 @@ const Details: React.FC<DetailsProps> = ({
             </span>
             <div className="flex flex-col">
               <h3 className="font-bold">
-                {detail?.experienceLevel ? detail?.experienceLevel : ""}
+                {detail?.experienceLevel
+                  ? detail?.experienceLevel
+                  : experienceLevel}
               </h3>
               <span className="text-secondaryColor">Expereince Level</span>
             </div>
@@ -209,7 +216,11 @@ const Details: React.FC<DetailsProps> = ({
             ))}
         </ul>
         <h3 className="font-bold mt-4 text-xl">About the client : </h3>
-        <p className="text-secondaryColor mb-6">{userData?.aboutCompany}</p>
+        <p className="text-secondaryColor mb-6">
+          {userData?.aboutCompany
+            ? userData.aboutCompany
+            : session.data?.user.aboutCompany}
+        </p>
 
         {creating ? (
           <button

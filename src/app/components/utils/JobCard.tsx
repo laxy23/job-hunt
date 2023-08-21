@@ -58,8 +58,8 @@ const JobCard = ({ data, deleteActive }: JobListProps) => {
           src={data?.logo}
           alt="icon"
           style={{
-            width: "110px",
-            height: "110px",
+            width: "80px",
+            height: "80px",
           }}
         />
         <div>

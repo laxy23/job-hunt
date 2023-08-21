@@ -36,6 +36,8 @@ interface ContextProps {
   setCurrentPage: Dispatch<SetStateAction<number>>;
   totalPages: number | null;
   setTotalPages: Dispatch<SetStateAction<number | null>>;
+  loading: boolean;
+  setLoading: Dispatch<SetStateAction<boolean>>;
 }
 
 const GlobalContext = createContext<ContextProps>({
@@ -46,12 +48,15 @@ const GlobalContext = createContext<ContextProps>({
   setCurrentPage: () => {},
   totalPages: null,
   setTotalPages: () => {},
+  loading: true,
+  setLoading: () => {},
 });
 
 export const GlobalContextProvider = ({ children }: any) => {
   const [jobData, setJobData] = useState<[] | Job[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState<number | null>(1);
+  const [loading, setLoading] = useState(true);
 
   const getAllJobs = async () => {
     const res = await fetch(`/api/job?page=${currentPage}&pageSize=3`);
@@ -60,6 +65,7 @@ export const GlobalContextProvider = ({ children }: any) => {
 
     setJobData(data.jobs);
     setTotalPages(data.totalPages);
+    setLoading(false);
   };
 
   return (
@@ -72,6 +78,8 @@ export const GlobalContextProvider = ({ children }: any) => {
         setCurrentPage,
         totalPages,
         setTotalPages,
+        loading,
+        setLoading,
       }}
     >
       {children}

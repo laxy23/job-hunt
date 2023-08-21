@@ -5,8 +5,10 @@ import sign from "@/images/signUp.png";
 import Image from "next/image";
 import Link from "next/link";
 import { Button } from "flowbite-react";
+import { useRouter } from "next/navigation";
 
 const SignUpPage = () => {
+  const router = useRouter();
   const [state, setState] = useState("employee");
   const [form, setForm] = useState({
     email: "",
@@ -58,7 +60,12 @@ const SignUpPage = () => {
           }),
         });
 
-        await res.json();
+        const data = await res.json();
+        if (data.message === "User already exists!") {
+          window.alert("User already exists!");
+        } else {
+          router.push("/sign-in");
+        }
       } catch (error) {
         console.log(error);
       }
@@ -77,7 +84,13 @@ const SignUpPage = () => {
           }),
         });
 
-        await res.json();
+        const data = await res.json();
+        console.log(data);
+        if (data.message === "User already exists!") {
+          window.alert("User already exists!");
+        } else {
+          router.push("/sign-in");
+        }
       } catch (error) {
         console.log(error);
       }

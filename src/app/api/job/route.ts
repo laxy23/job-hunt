@@ -45,16 +45,6 @@ export const GET = async (req: NextRequest) => {
       const search = url.searchParams.get("search");
       const jobTitle = url.searchParams.get("jobTitle");
 
-      console.log(
-        salary,
-        location,
-        avability,
-        experience,
-        search,
-        page,
-        jobTitle
-      );
-
       const filter: JobFilter = {};
 
       if (salary) {

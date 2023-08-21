@@ -1,12 +1,14 @@
 "use client";
 
 import PageTitle from "../utils/PageTitle";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import JobCard from "./utils/JobCard";
 import { useGlobalContext } from "./utils/Context/store";
+import Spinner from "./utils/Spinner";
 
 const Discover = () => {
   const { setJobData, jobData } = useGlobalContext();
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const getAllJobs = async () => {
@@ -15,10 +17,15 @@ const Discover = () => {
       const data = await res.json();
 
       setJobData(data.jobs);
+      setLoading(false);
     };
 
     getAllJobs();
   }, []);
+
+  if (loading) {
+    return <Spinner />;
+  }
 
   return (
     <section id="mb" className="container mx-auto px-6 mt-8 lg:mt-1">
