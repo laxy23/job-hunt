@@ -4,6 +4,7 @@ import { Inter } from "next/font/google";
 import NavbarMenu from "./components/Navbar";
 import AuthProvider from "./components/AuthProvider";
 import { GlobalContextProvider } from "./components/utils/Context/store";
+export const dynamic = "force-dynamic";
 
 const inter = Inter({ subsets: ["latin"] });
 
