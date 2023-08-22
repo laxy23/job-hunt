@@ -73,6 +73,8 @@ const JobList = ({ companyName }: JobListProps) => {
     } else {
       getAllJobs();
     }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentPage]);
 
   const handlePageChange = (

@@ -32,6 +32,8 @@ const CreateJob = () => {
     if (session.data?.user.role === "employee") {
       router.push("/");
     }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [session]);
 
   const [form, setForm] = useState({
