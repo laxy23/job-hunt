@@ -74,26 +74,24 @@ export const GET = async (req: NextRequest) => {
       const totalJobs = await Job.countDocuments();
       const jobs = await Job.find(filter).skip(skip).limit(PAGE_SIZE);
 
-      return NextResponse.json(
-        {
-          length: jobs.length,
-          totalPages: Math.ceil(totalJobs / PAGE_SIZE),
-          jobs,
-        },
-        { status: 200 }
-      );
+      const obj = {
+        length: jobs.length,
+        totalPages: Math.ceil(totalJobs / PAGE_SIZE),
+        jobs,
+      };
+
+      return new Response(JSON.stringify(obj), { status: 200 });
     } else {
       const totalJobs = await Job.countDocuments();
       const jobs = await Job.find().skip(skip).limit(PAGE_SIZE);
 
-      return NextResponse.json(
-        {
-          length: jobs.length,
-          totalPages: Math.ceil(totalJobs / PAGE_SIZE),
-          jobs,
-        },
-        { status: 200 }
-      );
+      const obj = {
+        length: jobs.length,
+        totalPages: Math.ceil(totalJobs / PAGE_SIZE),
+        jobs,
+      };
+
+      return new Response(JSON.stringify(obj), { status: 200 });
     }
   } catch (error) {
     console.log(error);

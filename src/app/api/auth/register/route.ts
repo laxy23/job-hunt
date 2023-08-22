@@ -44,7 +44,7 @@ export const POST = async (req: Request) => {
 
     const user = await User.create(newUser);
 
-    return NextResponse.json({ user }, { status: 201 });
+    return new Response(JSON.stringify(user), { status: 201 });
   } catch (error) {
     console.log(error);
   }

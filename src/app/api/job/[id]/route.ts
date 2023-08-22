@@ -22,7 +22,7 @@ export const PUT = async (
       { new: true }
     );
 
-    return NextResponse.json({ user }, { status: 200 });
+    return new Response(JSON.stringify(user), { status: 200 });
   } catch (error) {
     console.log(error);
   }
@@ -68,7 +68,7 @@ export const POST = async (
 
     const job = await Job.create(newJob);
 
-    return NextResponse.json({ job }, { status: 201 });
+    return new Response(JSON.stringify(job), { status: 201 });
   } catch (error) {
     console.log(error);
   }
@@ -87,7 +87,7 @@ export const GET = async (
 
     const user = await User.findById(job.user);
 
-    return NextResponse.json({ job, user }, { status: 200 });
+    return new Response(JSON.stringify(job, user), { status: 201 });
   } catch (error) {
     console.log(error);
   }

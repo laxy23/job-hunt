@@ -28,7 +28,7 @@ export const PUT = async (
       { new: true }
     );
 
-    return NextResponse.json({ user }, { status: 200 });
+    return new Response(JSON.stringify(user), { status: 200 });
   } catch (error) {
     console.log(error);
   }
@@ -45,7 +45,7 @@ export const GET = async (
 
     const myJobs = await Job.find({ user: id });
 
-    return NextResponse.json({ myJobs }, { status: 200 });
+    return new Response(JSON.stringify(myJobs), { status: 200 });
   } catch (error) {
     console.log(error);
   }
@@ -62,8 +62,8 @@ export const DELETE = async (
 
     await Job.findByIdAndDelete(id);
 
-    return NextResponse.json(
-      { message: "Job deleted successfully!" },
+    return new Response(
+      JSON.stringify({ message: "Job deleted successfully!" }),
       { status: 200 }
     );
   } catch (error) {
