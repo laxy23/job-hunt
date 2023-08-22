@@ -64,12 +64,10 @@ export const GET = async (req: NextRequest) => {
       }
 
       if (search) {
-        console.log(search);
         filter.companyName = search;
       }
 
       if (jobTitle && jobTitle.length > 2) {
-        console.log(123);
         filter.jobTitle = { $regex: jobTitle, $options: "i" };
       }
 
