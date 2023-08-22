@@ -9,9 +9,11 @@ import Select, { SelectChangeEvent } from "@mui/material/Select";
 import { useState, useEffect, ChangeEvent } from "react";
 import Details from "../components/utils/Details";
 import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 const CreateJob = () => {
   const session = useSession();
+  const router = useRouter();
   const [location, setLocation] = useState("");
   const [type, setType] = useState("");
   const [experienceLevel, setExperienceLevel] = useState("");
@@ -25,6 +27,10 @@ const CreateJob = () => {
         mail: session.data.user.email,
         companyName: session.data.user.name,
       }));
+    }
+
+    if (session.data?.user.role === "employee") {
+      router.push("/");
     }
   }, [session]);
 

@@ -122,12 +122,14 @@ const Profile = () => {
           </div>
         </div>
         <div>
-          <Link
-            href="/create"
-            className="border border-primaryColor border-solid px-8 py-2 hover:text-white hover:bg-primaryColor duration-200 hover:border-white"
-          >
-            Create Job
-          </Link>
+          {session.data?.user.role === "company" && (
+            <Link
+              href="/create"
+              className="border border-primaryColor border-solid px-8 py-2 hover:text-white hover:bg-primaryColor duration-200 hover:border-white"
+            >
+              Create Job
+            </Link>
+          )}
         </div>
       </div>
 
@@ -205,27 +207,30 @@ const Profile = () => {
         </div>
       </div>
       <hr />
-      <div className="flex gap-8 mt-8 mb-6 justify-between flex-col md:flex-row">
-        <div className="flex flex-col">
-          <h3 className="font-bold text-xl">About the company</h3>
-          <p className="text-secondaryColor font-medium">
-            Write short description and tell emloyee who you are!
-          </p>
+      {session.data?.user.role === "company" && (
+        <div className="flex gap-8 mt-8 mb-6 justify-between flex-col md:flex-row">
+          <div className="flex flex-col">
+            <h3 className="font-bold text-xl">About the company</h3>
+            <p className="text-secondaryColor font-medium">
+              Write short description and tell emloyee who you are!
+            </p>
+          </div>
+          <div className="flex flex-col w-full md:w-1/2 gap-4">
+            <textarea
+              value={aboutCompany ? aboutCompany : ""}
+              name="aboutCompany"
+              onChange={(e) => setaboutCompany(e.target.value)}
+              id="aboutCompany"
+              cols={10}
+              rows={10}
+              className="border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              placeholder="Write something about yourself!"
+              onFocus={() => setInputsFocused(true)}
+            />
+          </div>
         </div>
-        <div className="flex flex-col w-full md:w-1/2 gap-4">
-          <textarea
-            value={aboutCompany ? aboutCompany : ""}
-            name="aboutCompany"
-            onChange={(e) => setaboutCompany(e.target.value)}
-            id="aboutCompany"
-            cols={10}
-            rows={10}
-            className="border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            placeholder="Write something about yourself!"
-            onFocus={() => setInputsFocused(true)}
-          />
-        </div>
-      </div>
+      )}
+
       <hr />
       <div className="flex gap-8 mt-8 mb-6 justify-between flex-col lg:flex-row">
         <div className="flex flex-col">

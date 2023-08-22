@@ -128,7 +128,7 @@ const JobList = ({ companyName }: JobListProps) => {
                       />
                       <div className="flex flex-col">
                         <h3 className="font-bold text-lg mb-1">
-                          {companyName ? companyName : ""}
+                          {data.companyName ? data.companyName : ""}
                         </h3>
                         <p className="text-secondaryColor">{data.location}</p>
                       </div>
