@@ -87,7 +87,7 @@ export const GET = async (
 
     const user = await User.findById(job.user);
 
-    return new Response(JSON.stringify(job, user), { status: 201 });
+    return NextResponse.json({ job, user }, { status: 200 });
   } catch (error) {
     console.log(error);
   }
